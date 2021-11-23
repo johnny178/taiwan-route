@@ -9,6 +9,10 @@ export const Wrapper = styled.div`
   border: 1px solid #707070;
   border-radius: 10px;
 
+  @media (min-width: 600px) {
+    padding: 6% 10%;
+  }
+
   @media (min-width: 768px) {
     width: 658px;
     height: 455px;
@@ -33,8 +37,13 @@ export const Icon = styled.img`
   object-fit: contain;
   margin-right: 3.5px;
 
+  @media (min-width: 600px) {
+    height: 1.2rem;
+  }
+  
   @media (min-width: 768px) {
     margin-left: 30px;
+    height: 1.5rem;
   }
 `;
 
@@ -43,10 +52,14 @@ export const Position = styled.p`
   letter-spacing: 0.26px;
   color: #E3E3E3;
   white-space: nowrap;
+
+  @media (min-width: 600px) {
+    font-size: 1.2rem;
+  }
   
 
   @media (min-width: 768px) {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -60,17 +73,24 @@ export const Input = styled.input`
   border-radius: 8px;
   height: 100%;
   font-size: 0.8rem;
+  text-indent: 5%;
 
   &::placeholder {
     color: #E3E3E3;
-    text-indent: 5px;
   }
+
+  @media (min-width: 600px) {
+    font-size: 1rem;
+  }
+  
 
   @media (min-width: 768px) {
     margin-left: 51px;
     margin-right: 21px;
     width: 244px;
     flex: none;
+    font-size: 1rem;
+    text-indent: 10px;
   }
 `;
 
@@ -81,8 +101,9 @@ export const ModeBtn = styled.button`
   background-color: #E3E3E3;
   border-radius: 8px;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 25px;
+  cursor: pointer;
 
   &:not(:last-child) {
     margin-right: 3vw;
@@ -116,7 +137,7 @@ export const BtnGrid = styled.div`
   grid-template-columns: repeat(5,minmax(46px, 1fr));
   grid-gap: 3vw;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 3vw;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(7, 69px);
@@ -148,6 +169,7 @@ export const RouteBtn = styled.button`
   font-size: 1rem;
   text-align: center;
   color: #E3E3E3;
+  cursor: pointer;
 
   @media (min-width: 768px) {
     border-radius: 15px;
