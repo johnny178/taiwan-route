@@ -1,8 +1,13 @@
 import styled from 'styled-components/macro';
 
-export const BackgroundImage = styled.div`
+export const BackgroundImage = styled.img`
+  width: 100vw;
   height: 100vh;
-  background-color: lightgray;
+  background-color: #403F3F;
+  object-fit: cover;
+  overflow: hidden;
+  vertical-align: middle;
+  filter: brightness(30%);
 `;
 
 export const Wrapper = styled.div`
@@ -18,4 +23,5 @@ export const Container = styled.div`
   width: 100vw;
   margin: 0 auto;
   overflow: hidden;
+  padding: 0 5%;
 `;

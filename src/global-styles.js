@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
     line-height: 1.3;
-    background-color: #F8F8F8;
+    color: #E3E3E3;
   }
 `;
 
