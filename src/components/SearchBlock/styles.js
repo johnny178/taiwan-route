@@ -98,7 +98,8 @@ export const ModeBtn = styled.button`
   /* width: 74px; */
   aspect-ratio: 74 / 25;
   height: 100%;
-  background-color: #E3E3E3;
+  color: ${({ isActive }) => isActive ? '#E3E3E3' : '##403F3F'};;
+  background-color: ${({ isActive }) => isActive ? '#45B7D2' : '#E3E3E3'};
   border-radius: 8px;
   text-align: center;
   font-size: 1rem;

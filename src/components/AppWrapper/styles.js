@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 export const BackgroundImage = styled.img`
   width: 100vw;
-  height: 100vh;
+  height: 200vh;
   background-color: #403F3F;
   object-fit: cover;
   vertical-align: middle;
@@ -22,5 +22,5 @@ export const Container = styled.div`
   width: 100vw;
   margin: 0 auto;
   overflow: hidden;
-  padding: 0 5%;
+  padding: 3% 5%;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BackgroundImage, Container, Wrapper } from './styles';
-import BackgroundImageSmall from '../images/[PC]公車-公車查詢_背景.png';
-import BackgroundImageMedium from '../images/[PC]公車-公車查詢_背景@2x.png';
+import BackgroundImageSmall from '../../images/[PC]公車-公車查詢_背景.png';
+import BackgroundImageMedium from '../../images/[PC]公車-公車查詢_背景@2x.png';
 // import { useLocation } from 'react-router';
 
 const AppWrapper = (props) => {
