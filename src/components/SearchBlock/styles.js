@@ -13,7 +13,8 @@ export const Wrapper = styled.div`
     padding: 6% 10%;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
+    margin-right: 5%;
     width: 658px;
     height: 455px;
     padding: 29px 27px;
@@ -27,7 +28,7 @@ export const SearchBar = styled.div`
   width: 100%;
   height: 7vw;
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     height: 48px;
   }
 `;
@@ -41,7 +42,7 @@ export const Icon = styled.img`
     height: 1.2rem;
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     margin-left: 30px;
     height: 1.5rem;
   }
@@ -58,7 +59,7 @@ export const Position = styled.p`
   }
   
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     font-size: 1.5rem;
   }
 `;
@@ -84,18 +85,16 @@ export const Input = styled.input`
   }
   
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     margin-left: 51px;
     margin-right: 21px;
     width: 244px;
     flex: none;
-    font-size: 1rem;
     text-indent: 10px;
   }
 `;
 
 export const ModeBtn = styled.button`
-  /* width: 74px; */
   aspect-ratio: 74 / 25;
   height: 100%;
   color: ${({ isActive }) => isActive ? '#E3E3E3' : '##403F3F'};;
@@ -110,7 +109,7 @@ export const ModeBtn = styled.button`
     margin-right: 3vw;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     width: 157px;
     height: 49px;
     border-radius: 15px;
@@ -127,7 +126,7 @@ export const NumCont = styled.div`
   flex-direction: column;
   width: 100%;
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     flex-direction: row;
     justify-content: space-between;
   }
@@ -140,7 +139,7 @@ export const BtnGrid = styled.div`
   width: 100%;
   margin-top: 3vw;
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     grid-template-columns: repeat(7, 69px);
     grid-template-columns: ${({ hasNum }) => hasNum ? 'repeat(5, 69px)' : 'repeat(7,69px)'};
     grid-gap: 20px;
@@ -152,7 +151,7 @@ export const RouteBtnCont = styled.div`
   position: relative;
   padding-top: 70%;
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     padding-top: 0px;
     width: 69px;
     height: 48px;
@@ -172,7 +171,7 @@ export const RouteBtn = styled.button`
   color: #E3E3E3;
   cursor: pointer;
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     border-radius: 15px;
   }
 `;
@@ -184,7 +183,7 @@ export const FilterCont = styled.div`
   margin-top: 3vw;
   height: 7vw;
 
-  @media (min-width: 768px) {
+  @media (min-width: 996px) {
     flex-direction: column;
     height: auto;
     margin-left: 21px;

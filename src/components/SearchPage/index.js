@@ -4,16 +4,16 @@ import SearchBlock from '../SearchBlock';
 
 import { countryDic, Mode } from '../../constants';
 import { getCityBusRoutes } from '../../api';
+import { Container } from './styles';
 
 const SearchPage = () => {
   const [mode, setMode] = useState(Mode.NEARBY);
   const [routeData, setRouteData] = useState([]);
 
   const searchRoutes = async (searchValue) => {
-    // let filterName = '';
     let searchParam = new URLSearchParams([
-      // ['$top', PAGE_NUM],
       // ['$filter', `Picture/PictureUrl1 ne null${filterName}`],
+      ['$orderby', 'RouteName/Zh_tw'],
       ['$format', 'JSON'],
     ]);
 
@@ -31,7 +31,7 @@ const SearchPage = () => {
   };
 
   return (
-    <>
+    <Container>
       <SearchBlock
         mode={mode}
         setMode={mode => setMode(mode)}
@@ -42,7 +42,7 @@ const SearchPage = () => {
         data={routeData}
         mode={mode}
       />
-    </>
+    </Container>
   );
 };
 

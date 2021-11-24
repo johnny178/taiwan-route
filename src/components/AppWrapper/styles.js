@@ -1,4 +1,6 @@
 import styled from 'styled-components/macro';
+import BackgroundImageSmall from '../../images/[PC]公車-公車查詢_背景.png';
+// import BackgroundImageMedium from '../../images/[PC]公車-公車查詢_背景@2x.png';
 
 export const BackgroundImage = styled.img`
   width: 100vw;
@@ -10,15 +12,14 @@ export const BackgroundImage = styled.img`
 `;
 
 export const Wrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(${BackgroundImageSmall});
+  background-size: contain;
+  min-height: 100vh;
+  min-width: 100vw;
 `;
 
 export const Container = styled.div`
-  max-width: 1280px;
+  max-width: 1440px;
   width: 100vw;
   margin: 0 auto;
   overflow: hidden;

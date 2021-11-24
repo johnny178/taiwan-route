@@ -1,7 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { BackgroundImage, Container, Wrapper } from './styles';
-import BackgroundImageSmall from '../../images/[PC]公車-公車查詢_背景.png';
-import BackgroundImageMedium from '../../images/[PC]公車-公車查詢_背景@2x.png';
+import { Container, Wrapper } from './styles';
 // import { useLocation } from 'react-router';
 
 const AppWrapper = (props) => {
@@ -9,7 +8,6 @@ const AppWrapper = (props) => {
 
   return (
     <>
-      <BackgroundImage src={BackgroundImageSmall} srcSet={`${BackgroundImageSmall} 1x, ${BackgroundImageMedium} 2x`} />
       <Wrapper>
         <Container>
           {props.children}

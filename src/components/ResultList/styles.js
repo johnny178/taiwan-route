@@ -4,7 +4,12 @@ import { NavLink } from 'react-router-dom';
 export const Container = styled.div`
   /* display: flex;
   flex-direction: column; */
+  flex: 1;
   margin-top: 8%;
+
+  @media (min-width: 996px) {
+    margin-top: 0;
+  }
 `;
 
 export const Section = styled.div`
@@ -25,20 +30,20 @@ export const Text = styled.p`
 `;
 
 export const TextExtraSmall = styled(Text)`
-  font-size: 0.375rem;
-  padding-top: 3px;
+  font-size: 0.6rem;
+  padding-top: 0px;
 `;
 
 export const TextSmall = styled(Text)`
-  font-size: 0.56rem;
+  font-size: 0.8rem;
 `;
 
 export const TextMedium = styled(Text)`
-  font-size: 0.6875rem;
+  font-size: 1rem;
 `;
 
 export const TextLarge = styled(Text)`
-  font-size: 0.8125rem;
+  font-size: 1.2rem;
 `;
 
 export const NearbyStationBtn = styled.button`
@@ -63,7 +68,16 @@ export const Triangle = styled.div`
 
 export const DirectionCont = styled.div`
   display: flex;
-  /* height: 20px; */
+  flex-direction: column;
+  padding: 10px 0;
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+  }
+
+  @media (min-width: 996px) {
+    flex-direction: column;
+  }
 `;
 
 export const Busdirection = styled.span`
@@ -74,8 +88,24 @@ export const Busdirection = styled.span`
   background-color: ${({ bkgColor }) => `${bkgColor}`};
   border-radius: 10px;
   padding: 3px 0;
-  width: 75px;
-  margin-right: 35px;
+  width: 95px;
+  margin-right: 50px;
+  
+  &:first-child{
+    margin-bottom: 20px;
+  }
+  
+  @media (min-width: 600px) {
+    &:first-child{
+      margin-bottom: 0;
+    }
+  }
+  
+  @media (min-width: 996px) {
+    &:first-child{
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 export const BusStateText = styled.p`
@@ -84,13 +114,15 @@ export const BusStateText = styled.p`
   justify-content: center;
   align-items: center;
   background-color: #E3E3E3;
-  border-radius: 10px;
+  border-radius: 13px;
   color: #77797D;
-  padding: 5px 0;
-  top: -2px;
-  right: -23px;
-  width: 33px;
+  padding: 8px 5px;
+  /* top: -20%; */
+  right: 0;
+  transform: translate(85%, 0);
+  /* width: 33px; */
   font-size: 0.56rem;
+  white-space: nowrap;
 `;
 
 export const RefreshBtn = styled.button`
