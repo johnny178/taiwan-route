@@ -31,7 +31,6 @@ export const Text = styled.p`
 
 export const TextExtraSmall = styled(Text)`
   font-size: 0.6rem;
-  padding-top: 0px;
 `;
 
 export const TextSmall = styled(Text)`
@@ -112,15 +111,13 @@ export const BusStateText = styled.p`
   position: absolute;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   background-color: #E3E3E3;
   border-radius: 13px;
   color: #77797D;
   padding: 8px 5px;
-  /* top: -20%; */
   right: 0;
-  transform: translate(85%, 0);
-  /* width: 33px; */
+  transform: translate(75%, 0);
   font-size: 0.56rem;
   white-space: nowrap;
 `;

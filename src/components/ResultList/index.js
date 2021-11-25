@@ -7,7 +7,7 @@ import RefreshSmall from '../../images/重新整理icon.png';
 import RefreshMedium from '../../images/重新整理icon@2x.png';
 
 const ResultList = ({ mode, data }) => {
-  const [isPressed, setIsPressed] = useState(true);
+  const [isPressed, setIsPressed] = useState(false);
 
   const renderSearchHeader = () => {
     let headerText = mode === Mode.SEARCH ? '搜尋結果' : '我的收藏';
@@ -38,18 +38,54 @@ const ResultList = ({ mode, data }) => {
     );
   };
 
+  const renderNearbyStation = () => {
+    return (
+      <ResultCont>
+        {
+          data.map(item => {
+            return (
+              <React.Fragment key={item.StationID}>
+                <NearbyStationBtn onClick={() => setIsPressed(prevIsPressed => !prevIsPressed)} >
+                  {item.StationAddress}
+                  <Triangle isPressed={isPressed} />
+                </NearbyStationBtn>
+                {
+                  isPressed && item.Stops.map((item) => {
+                    return (
+                      <ResultItem to={'/'} key={item.RouteID}>
+                        <Block>
+                          <TextLarge>{item.RouteName.Zh_tw}</TextLarge>
+                          <TextMedium>{`${item.DepartureStopNameZh} - ${item.DestinationStopNameZh}`}</TextMedium>
+                        </Block>
+                        <DirectionCont>
+                          <Busdirection bkgColor={'#A645B5'}>
+                            <TextExtraSmall>{'往'}</TextExtraSmall>
+                            <TextSmall>{'國父紀念館'}</TextSmall>
+                            <BusStateText>未發車</BusStateText>
+                          </Busdirection>
+
+                          <Busdirection bkgColor={'#53C332FA'}>
+                            <TextExtraSmall>{'往'}</TextExtraSmall>
+                            <TextSmall>{'東湖'}</TextSmall>
+                            <BusStateText>未發車</BusStateText>
+                          </Busdirection>
+                        </DirectionCont>
+                      </ResultItem>
+                    );
+                  })
+                }
+              </React.Fragment>
+            );
+          })
+        }
+      </ResultCont >
+    );
+  };
+
   const renderStation = () => {
     return (
       <ResultCont>
         {
-          mode === Mode.NEARBY &&
-          <NearbyStationBtn onClick={() => setIsPressed(prevIsPressed => !prevIsPressed)} >
-            新明路
-            <Triangle isPressed={isPressed} />
-          </NearbyStationBtn>
-        }
-        {
-          isPressed &&
           data.map(item => {
             return (
               <ResultItem to={'/'} key={item.RouteID}>
@@ -57,23 +93,6 @@ const ResultList = ({ mode, data }) => {
                   <TextLarge>{item.RouteName.Zh_tw}</TextLarge>
                   <TextMedium>{`${item.DepartureStopNameZh} - ${item.DestinationStopNameZh}`}</TextMedium>
                 </Block>
-                {
-                  mode === Mode.NEARBY ?
-                    <DirectionCont>
-                      <Busdirection bkgColor={'#A645B5'}>
-                        <TextExtraSmall>{'往'}</TextExtraSmall>
-                        <TextSmall>{'國父紀念館'}</TextSmall>
-                        <BusStateText>未發車</BusStateText>
-                      </Busdirection>
-
-                      <Busdirection bkgColor={'#53C332FA'}>
-                        <TextExtraSmall>{'往'}</TextExtraSmall>
-                        <TextSmall>{'東湖'}</TextSmall>
-                        <BusStateText>未發車</BusStateText>
-                      </Busdirection>
-                    </DirectionCont> : null
-                }
-
               </ResultItem>
             );
           })
@@ -86,7 +105,7 @@ const ResultList = ({ mode, data }) => {
     <Container>
       {mode === Mode.NEARBY ? renderNeabyHeader() : renderSearchHeader()}
       <Line />
-      {renderStation()}
+      {mode === Mode.NEARBY ? renderNearbyStation() : renderStation()}
     </Container>
   );
 };

@@ -22,10 +22,17 @@ const getBusRoutes = axios.create({
   headers: getAuthorizationHeader(),
 });
 
+//市區公車之站牌資料
+const getBusStops = axios.create({
+  baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City',
+  headers: getAuthorizationHeader(),
+});
+
 //市區公車之路線資料
 export const getCityBusRoutes = (city, routeName, searchParam = '') => getBusRoutes.get(`/${city}/${routeName}?${searchParam}`);
 
-
+//市區公車之站牌資料
+export const getCityBusStops = (city, searchParam = '') => getBusStops.get(`/${city}?${searchParam}`);
 
 // //市區公車之路線資料
 // export const getAllScenicSpots = searchParam => getBusRoutes.get(searchParam ? `?${searchParam}` : '');

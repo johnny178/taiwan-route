@@ -176,7 +176,7 @@ export const RouteBtn = styled.button`
   }
 `;
 
-export const FilterCont = styled.div`
+export const ModeCont = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
