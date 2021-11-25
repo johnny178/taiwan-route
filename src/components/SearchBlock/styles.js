@@ -182,6 +182,7 @@ export const ModeCont = styled.div`
   width: 100%;
   margin-top: 3vw;
   height: 7vw;
+  color: black;
 
   @media (min-width: 996px) {
     flex-direction: column;
