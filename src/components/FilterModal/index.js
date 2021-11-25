@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { arrCountryName } from '../../constants';
-import { ColorWrapper, Container, RadioBtn, RadioCont, RegionName, Wrapper } from './styles';
+import { BackBtn, ColorWrapper, Container, OptionCont, RadioBtn, RadioCont, RegionName, Wrapper } from './styles';
 
-const FilterModal = () => {
+const FilterModal = ({ region, setRegion, setIsFilterPressed }) => {
   return ReactDOM.createPortal(
     <ColorWrapper>
       <Container >
@@ -12,14 +13,22 @@ const FilterModal = () => {
             {
               arrCountryName.map((item, index) => {
                 return (
-                  <React.Fragment key={index}>
-                    <RadioBtn type='radio' id={item} name={item} value={item} />
-                    <RegionName for={item} >{item}</RegionName>
-                  </React.Fragment>
+                  <OptionCont key={index}>
+                    <RadioBtn
+                      type='radio'
+                      id={item}
+                      name={item}
+                      value={item}
+                      checked={region === item}
+                      onChange={e => setRegion(e.target.value)}
+                    />
+                    <RegionName htmlFor={item}>{item}</RegionName>
+                  </OptionCont>
                 );
               })
             }
           </RadioCont>
+          <BackBtn onClick={() => setIsFilterPressed(prevIsFilterPressed => !prevIsFilterPressed)}>確定</BackBtn>
         </Wrapper>
       </Container>
     </ColorWrapper>

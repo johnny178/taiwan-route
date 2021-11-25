@@ -26,7 +26,7 @@ const SearchPage = () => {
       default:
         break;
     }
-  }, [searchValue, mode]);
+  }, [searchValue, mode, region]);
 
   const searchRoutes = async (searchValue) => {
     let searchParam = new URLSearchParams([
@@ -35,7 +35,7 @@ const SearchPage = () => {
     ]);
 
     try {
-      let resp = await getCityBusRoutes(countryDic['臺北市'], searchValue, searchParam);
+      let resp = await getCityBusRoutes(countryDic[region], searchValue, searchParam);
       setRouteData(resp.data);
     } catch (error) {
       console.log('get bus routes error', error);

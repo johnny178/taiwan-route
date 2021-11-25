@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { BtnGrid, ModeCont, Icon, Input, ModeBtn, NumCont, Position, RouteBtn, RouteBtnCont, SearchBar, Wrapper, Modal } from './styles';
+import { BtnGrid, ModeCont, Icon, Input, ModeBtn, NumCont, Position, RouteBtn, RouteBtnCont, SearchBar, Wrapper } from './styles';
 import LocalIconSmall from '../../images/locol icon.png';
 import LocalIconMedium from '../../images/locol icon@2x.png';
 import { Mode } from '../../constants';
@@ -33,10 +32,10 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
 
   return (
     <Wrapper>
-      {isFilterPressed && <FilterModal />}
+      {isFilterPressed && <FilterModal region={region} setRegion={setRegion} setIsFilterPressed={setIsFilterPressed} />}
       <SearchBar>
         <Icon src={LocalIconSmall} srcSet={`${LocalIconSmall} 1x, ${LocalIconMedium} 2x`} />
-        <Position>台北市</Position>
+        <Position>{region}</Position>
         <Input
           placeholder={'要搭哪輛公車呢？'}
           inputMode={'none'}
