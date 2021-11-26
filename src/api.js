@@ -16,23 +16,41 @@ const getAuthorizationHeader = () => {
   return { 'Authorization': Authorization, 'X-Date': GMTString };
 };
 
-//市區公車之路線資料
+//公車之路線資料
 const getBusRoutes = axios.create({
   baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City',
   headers: getAuthorizationHeader(),
 });
 
-//市區公車之站牌資料
+//公車之站牌資料
 const getBusStops = axios.create({
   baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City',
   headers: getAuthorizationHeader(),
 });
 
-//市區公車之路線資料
+//公車之路線站序資料
+const getBusStopOrder = axios.create({
+  baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City',
+  headers: getAuthorizationHeader(),
+});
+
+//公車之預估到站資料
+const getBusEstimatedTime = axios.create({
+  baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City',
+  headers: getAuthorizationHeader(),
+});
+
+//公車之路線資料
 export const getCityBusRoutes = (city, routeName, searchParam = '') => getBusRoutes.get(`/${city}/${routeName}?${searchParam}`);
 
-//市區公車之站牌資料
+//公車之站牌資料
 export const getCityBusStops = (city, searchParam = '') => getBusStops.get(`/${city}?${searchParam}`);
+
+//公車之路線站序資料
+export const getCityBusStopOrder = (city, routeName, searchParam = '') => getBusStopOrder.get(`/${city}/${routeName}?${searchParam}`);
+
+//公車之預估到站資料
+export const getCityBusEstimatedTime = (city, routeName, searchParam = '') => getBusEstimatedTime.get(`/${city}/${routeName}?${searchParam}`);
 
 // //市區公車之路線資料
 // export const getAllScenicSpots = searchParam => getBusRoutes.get(searchParam ? `?${searchParam}` : '');

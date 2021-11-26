@@ -102,6 +102,7 @@ const SearchPage = () => {
       <ResultList
         data={routeData}
         mode={mode}
+        region={region}
       />
     </Container>
   );

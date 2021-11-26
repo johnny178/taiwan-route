@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Block, Container, Line, Section, NearbyStationBtn, RefreshBtn, RefreshIcon, Triangle, ResultCont, ResultItem, DirectionCont, Busdirection, BusStateText, TextMedium, TextSmall, TextLarge, TextExtraSmall } from './styles';
 
-import { Mode } from '../../constants';
+import { Mode, countryDic } from '../../constants';
 
 import RefreshSmall from '../../images/重新整理icon.png';
 import RefreshMedium from '../../images/重新整理icon@2x.png';
 
-const ResultList = ({ mode, data }) => {
+const ResultList = ({ data, mode, region }) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const renderSearchHeader = () => {
@@ -88,7 +88,14 @@ const ResultList = ({ mode, data }) => {
         {
           data.map(item => {
             return (
-              <ResultItem to={'/'} key={item.RouteID}>
+              <ResultItem
+                key={item.RouteID}
+                to={{
+                  pathname: `/${item.RouteName.Zh_tw}}`,
+                  search: `?region=${countryDic[region]}`,
+                }}
+                state={item}
+              >
                 <Block>
                   <TextLarge>{item.RouteName.Zh_tw}</TextLarge>
                   <TextMedium>{`${item.DepartureStopNameZh} - ${item.DestinationStopNameZh}`}</TextMedium>
