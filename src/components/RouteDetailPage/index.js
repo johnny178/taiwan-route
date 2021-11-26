@@ -27,8 +27,9 @@ const RouteDetailPage = () => {
 
     try {
       let resp = await getCityBusRoutes(region, routeName, searchParam);
-      const { DepartureStopNameZh, DestinationStopNameZh } = resp.data[0];
-      setDepartureDestination([DepartureStopNameZh, DestinationStopNameZh]);
+      let route = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
+      const { DepartureStopNameZh, DestinationStopNameZh } = route[0];
+      setDepartureDestination([DestinationStopNameZh, DepartureStopNameZh]);
     } catch (error) {
       console.log('get bus routes error', error);
     }
@@ -36,11 +37,12 @@ const RouteDetailPage = () => {
 
   //取得路線站序資料
   const getBusStopOrder = async () => {
-    let searchParam = new URLSearchParams([['$top', 2], ['$format', 'JSON']]);
+    let searchParam = new URLSearchParams([['$format', 'JSON']]);
 
     try {
       let resp = await getCityBusStopOrder(region, routeName, searchParam);
-      setBusStopOrder(resp.data);
+      let stops = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
+      setBusStopOrder(stops);
     } catch (error) {
       console.log('get bus stop order error', error);
     }
@@ -48,11 +50,16 @@ const RouteDetailPage = () => {
 
   //取得預估到站資料
   const getBusEstimatedTime = async () => {
-    let searchParam = new URLSearchParams([['$filter', 'Direction eq 0'], ['$format', 'JSON']]);
+    let searchParam = new URLSearchParams([['$format', 'JSON']]);
 
     try {
       let resp = await getCityBusEstimatedTime(region, routeName, searchParam);
-      console.log('yotest', resp.data);
+      let bus = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
+
+      //去程
+      let goBus = bus.filter(item => item.Direction);
+      let backBus = bus.filter(item => !item.Direction);
+      console.log('yotest', goBus);
     } catch (error) {
       console.log('get bus stop order error', error);
     }

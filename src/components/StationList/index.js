@@ -5,7 +5,6 @@ import { Container, DirectionBtn, Header, StationCell, HeaderText, TextMedium, T
 const StationList = ({ departureDestination, stopOrderData }) => {
   const [direction, setDirection] = useState(0);//0去程 1返程
 
-  // console.log(stopOrderData)
   const renderStopsList = () => {
     return (
       stopOrderData[direction]?.Stops.map(item => (
