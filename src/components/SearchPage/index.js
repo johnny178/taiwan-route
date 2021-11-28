@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ResultList from '../ResultList';
 import SearchBlock from '../SearchBlock';
 
@@ -13,6 +13,21 @@ const SearchPage = () => {
   const [region, setRegion] = useState('臺北市');
   // const [location, setLocation] = useState({ latitude: '', longitude: '' });
 
+  const searchRoutes = useCallback(async (searchValue) => {
+    let searchParam = new URLSearchParams([
+      ['$orderby', 'RouteName/Zh_tw'],
+      ['$format', 'JSON'],
+    ]);
+
+    try {
+      let resp = await getCityBusRoutes(countryDic[region], searchValue, searchParam);
+      setRouteData(resp.data);
+    } catch (error) {
+      console.log('get bus routes error', error);
+    }
+  }, [region]
+  );
+
   useEffect(() => {
     switch (mode) {
       case Mode.SEARCH:
@@ -26,21 +41,7 @@ const SearchPage = () => {
       default:
         break;
     }
-  }, [searchValue, mode, region]);
-
-  const searchRoutes = async (searchValue) => {
-    let searchParam = new URLSearchParams([
-      ['$orderby', 'RouteName/Zh_tw'],
-      ['$format', 'JSON'],
-    ]);
-
-    try {
-      let resp = await getCityBusRoutes(countryDic[region], searchValue, searchParam);
-      setRouteData(resp.data);
-    } catch (error) {
-      console.log('get bus routes error', error);
-    }
-  };
+  }, [searchValue, mode, region, searchRoutes]);
 
   /*
   const searchNeabyRoutes = async () => {

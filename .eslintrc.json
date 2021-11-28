@@ -11,11 +11,13 @@
       "ecmaVersion": 12,
       "sourceType": "module"
     },
-    "plugins": ["react"],
+    "plugins": ["react", "react-hooks"],
     "rules": {
       "quotes": [1, "single"],
       "react/prop-types": [0],
-      "semi": [1, "always"]
+      "semi": [1, "always"],
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
     }
   }
   

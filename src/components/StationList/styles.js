@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const Header = styled.div`
@@ -19,6 +20,7 @@ export const DirectionBtn = styled.button`
   font-size: 1rem;
   padding: 10px 0;
   white-space: nowrap;
+  font-weight: 700;
 
   &::before {
     content: '往 ';
@@ -53,11 +55,15 @@ export const TimeCont = styled.div`
 
 export const Time = styled.p`
   font-size: 1.2rem;
-  background-color: #E3E3E3;
+  color: ${({ color }) => color};
+  background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 15px;
   letter-spacing: 0.32px;
-  color: #77797D;
   padding: 3px 15px;
+  white-space: nowrap;
+  width: 110px;
+  text-align: center;
+  font-weight: 700;
 
   &::after {
     content: '${({ isShowMinText }) => isShowMinText ? ' 分' : ''}';
@@ -79,11 +85,13 @@ export const Text = styled.p`
   color: ${({ color }) => color ? color : 'black'};
   letter-spacing: 0.3px;
   text-align: center;
+  font-weight: 500;
 `;
 
 export const HeaderText = styled(Text)`
   flex : 1;
   font-size: 0.8rem;
+  font-weight: 500;
 `;
 
 export const TextSmall = styled(Text)`
@@ -91,6 +99,7 @@ export const TextSmall = styled(Text)`
 `;
 
 export const TextMedium = styled(Text)`
+  text-align: left;
   font-size: 1rem;
 `;
 

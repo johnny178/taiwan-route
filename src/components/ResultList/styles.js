@@ -140,9 +140,7 @@ export const Line = styled.div`
 `;
 
 
-export const ResultCont = styled.div`
-  
-`;
+export const ResultCont = styled.div``;
 
 export const ResultItem = styled(NavLink)`
   display: flex;
@@ -150,4 +148,12 @@ export const ResultItem = styled(NavLink)`
   align-items: center;
   border-bottom: 1px solid rgba(227, 227, 227, .4);
   padding: 7px 0 7px 3%;
+`;
+
+export const LoveBtn = styled.button`
+
+`;
+
+export const Icon = styled.img`
+  object-fit: cover;
 `;

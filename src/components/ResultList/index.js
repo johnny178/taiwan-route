@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Block, Container, Line, Section, NearbyStationBtn, RefreshBtn, RefreshIcon, Triangle, ResultCont, ResultItem, DirectionCont, Busdirection, BusStateText, TextMedium, TextSmall, TextLarge, TextExtraSmall } from './styles';
+import { Block, Container, Line, Section, NearbyStationBtn, RefreshBtn, RefreshIcon, Triangle, ResultCont, ResultItem, DirectionCont, Busdirection, BusStateText, TextMedium, TextSmall, TextLarge, TextExtraSmall, LoveBtn, Icon } from './styles';
 
 import { Mode, countryDic } from '../../constants';
 
 import RefreshSmall from '../../images/重新整理icon.png';
 import RefreshMedium from '../../images/重新整理icon@2x.png';
+// import LoveSmall from '../../images/我的收藏icon.png';
 
 const ResultList = ({ data, mode, region }) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -100,6 +101,9 @@ const ResultList = ({ data, mode, region }) => {
                   <TextLarge>{item.RouteName.Zh_tw}</TextLarge>
                   <TextMedium>{`${item.DepartureStopNameZh} - ${item.DestinationStopNameZh}`}</TextMedium>
                 </Block>
+                <LoveBtn>
+                  <Icon />
+                </LoveBtn>
               </ResultItem>
             );
           })

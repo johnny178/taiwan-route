@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { getCityBusEstimatedTime, getCityBusRoutes, getCityBusStopOrder } from '../../api';
@@ -14,16 +14,13 @@ const RouteDetailPage = () => {
   const [busStopOrder, setBusStopOrder] = useState([]);
   const [departureDestination, setDepartureDestination] = useState([]);
   const [stopsData, setStopData] = useState([]);//組合過後的站牌資訊
+  const [refreshTime, setRefreshTime] = useState(5);
 
   const region = urlSearchParam.get('region');
   let routeName = decodeURI(location.pathname).slice(1, -1);
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   //取得路線資料
-  const searchRoutes = async () => {
+  const searchRoutes = useCallback(async () => {
     let searchParam = new URLSearchParams([['$format', 'JSON']]);
 
     try {
@@ -34,9 +31,10 @@ const RouteDetailPage = () => {
     } catch (error) {
       console.log('get bus routes error', error);
     }
-  };
+  }, [region, routeName]
+  );
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     let searchParam = new URLSearchParams([['$format', 'JSON']]);
     let goBus = [];
     let backBus = [];
@@ -65,8 +63,6 @@ const RouteDetailPage = () => {
     } catch (error) {
       console.log('get bus estimated time error', error);
     }
-    // console.log('gobus', goBus)
-
     //組去程站牌資訊
     goBus.forEach(item => {
       goStopsData[item.StopID] = {
@@ -91,7 +87,21 @@ const RouteDetailPage = () => {
 
     setStopData([goStopsData, backStopsData]);
     setIsLoading(false);
-  };
+  }, [region, routeName, searchRoutes]
+  );
+
+  useEffect(() => {
+    refreshTime === 5 && getData();
+  }, [refreshTime, getData]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRefreshTime(prevRefreshTime => prevRefreshTime === 0 ? 5 : prevRefreshTime -= 1);
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   if (isLoading) {
     return (<Loader />);
@@ -103,6 +113,7 @@ const RouteDetailPage = () => {
         departureDestination={departureDestination}
         stopOrderData={busStopOrder}
         stopsData={stopsData}
+        refreshTime={refreshTime}
       />
     </Container>
   );

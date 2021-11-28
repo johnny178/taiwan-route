@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   background-color: rgba(255, 255, 255, .31);
   border: 1px solid #707070;
   border-radius: 10px;
+  margin-top: 3%;
 
   @media (min-width: 600px) {
     padding: 6% 10%;
@@ -97,7 +98,7 @@ export const Input = styled.input`
 export const ModeBtn = styled.button`
   aspect-ratio: 74 / 25;
   height: 100%;
-  color: ${({ isActive }) => isActive ? '#E3E3E3' : '##403F3F'};;
+  color: ${({ isActive }) => isActive ? '#E3E3E3' : '#403F3F'};;
   background-color: ${({ isActive }) => isActive ? '#45B7D2' : '#E3E3E3'};
   border-radius: 8px;
   text-align: center;
