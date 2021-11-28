@@ -60,7 +60,7 @@ export const Time = styled.p`
   padding: 3px 15px;
 
   &::after {
-    content:' 分';
+    content: '${({ isShowMinText }) => isShowMinText ? ' 分' : ''}';
     font-size: 0.8rem;
   }
 `;

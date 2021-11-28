@@ -4,25 +4,26 @@ import { useLocation } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { getCityBusEstimatedTime, getCityBusRoutes, getCityBusStopOrder } from '../../api';
 import StationList from '../StationList';
+import Loader from '../Loader';
 import { Container } from './styles';
 
 const RouteDetailPage = () => {
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
   const [urlSearchParam, setUrlSeachParam] = useSearchParams();
   const [busStopOrder, setBusStopOrder] = useState([]);
   const [departureDestination, setDepartureDestination] = useState([]);
+  const [stopsData, setStopData] = useState([]);//組合過後的站牌資訊
 
   const region = urlSearchParam.get('region');
   let routeName = decodeURI(location.pathname).slice(1, -1);
 
   useEffect(() => {
-    searchRoutes();
-    getBusStopOrder();
-    getBusEstimatedTime();
+    getData();
   }, []);
 
   //取得路線資料
-  const searchRoutes = async (searchValue) => {
+  const searchRoutes = async () => {
     let searchParam = new URLSearchParams([['$format', 'JSON']]);
 
     try {
@@ -35,10 +36,16 @@ const RouteDetailPage = () => {
     }
   };
 
-  //取得路線站序資料
-  const getBusStopOrder = async () => {
+  const getData = async () => {
     let searchParam = new URLSearchParams([['$format', 'JSON']]);
+    let goBus = [];
+    let backBus = [];
+    let goStopsData = {};//組合過後的站牌資訊
+    let backStopsData = {};//組合過後的回程站牌資訊
 
+    await searchRoutes();
+
+    //取得路線站序資料
     try {
       let resp = await getCityBusStopOrder(region, routeName, searchParam);
       let stops = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
@@ -46,30 +53,56 @@ const RouteDetailPage = () => {
     } catch (error) {
       console.log('get bus stop order error', error);
     }
-  };
 
-  //取得預估到站資料
-  const getBusEstimatedTime = async () => {
-    let searchParam = new URLSearchParams([['$format', 'JSON']]);
-
+    //取得預估到站資料
     try {
       let resp = await getCityBusEstimatedTime(region, routeName, searchParam);
       let bus = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
 
       //去程
-      let goBus = bus.filter(item => item.Direction);
-      let backBus = bus.filter(item => !item.Direction);
-      console.log('yotest', goBus);
+      goBus = bus.filter(item => !item.Direction);
+      backBus = bus.filter(item => item.Direction);
     } catch (error) {
-      console.log('get bus stop order error', error);
+      console.log('get bus estimated time error', error);
     }
+    // console.log('gobus', goBus)
+
+    //組去程站牌資訊
+    goBus.forEach(item => {
+      goStopsData[item.StopID] = {
+        StopStatus: item.StopStatus,
+        Estimate: item.Estimate,
+        EstimateTime: item.EstimateTime,
+        NextBusTime: item.NextBusTime,
+        PlateNumb: item.PlateNumb,
+      };
+    });
+
+    //組回程站牌資訊
+    backBus.forEach(item => {
+      backStopsData[item.StopID] = {
+        StopStatus: item.StopStatus,
+        Estimate: item.Estimate,
+        EstimateTime: item.EstimateTime,
+        NextBusTime: item.NextBusTime,
+        PlateNumb: item.PlateNumb,
+      };
+    });
+
+    setStopData([goStopsData, backStopsData]);
+    setIsLoading(false);
   };
+
+  if (isLoading) {
+    return (<Loader />);
+  }
 
   return (
     <Container>
       <StationList
         departureDestination={departureDestination}
         stopOrderData={busStopOrder}
+        stopsData={stopsData}
       />
     </Container>
   );
