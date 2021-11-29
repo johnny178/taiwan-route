@@ -15,10 +15,10 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
     return (
       stopOrderData[direction]?.Stops.map(item => {
         const {
-          Stopstatus,
+          StopStatus,
           EstimateTime,
           NextBusTime
-        } = stopsData[direction][item.StopID];
+        } = stopsData[direction][item.StopID] ?? {};
         const estimateTime = EstimateTime !== undefined && (Math.floor(EstimateTime / 60) > 0 ? Math.floor(EstimateTime / 60) : '進站中');
         const nextBusTime = parseIsoDatetime(NextBusTime);
 
@@ -39,11 +39,10 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
 
         // console.log(stopsData[direction][item.StopID]);
         const timeText = () => {
-          if (Stopstatus !== 0 || Stopstatus === undefined) {
+          if (StopStatus !== 0 || StopStatus === undefined) {
             if (estimateTime) return estimateTime;
             if (nextBusTime) return nextBusTime;
-
-            switch (Stopstatus) {
+            switch (StopStatus) {
               case 1:
                 return '尚未發車';
               case 2:

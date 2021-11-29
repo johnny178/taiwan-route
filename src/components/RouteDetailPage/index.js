@@ -41,7 +41,12 @@ const RouteDetailPage = () => {
     let goStopsData = {};//組合過後的站牌資訊
     let backStopsData = {};//組合過後的回程站牌資訊
 
-    await searchRoutes();
+    if (location.state) {
+      const { DepartureStopNameZh, DestinationStopNameZh } = location.state;
+      setDepartureDestination([DestinationStopNameZh, DepartureStopNameZh]);
+    } else {
+      await searchRoutes();
+    }
 
     //取得路線站序資料
     try {
@@ -87,7 +92,7 @@ const RouteDetailPage = () => {
 
     setStopData([goStopsData, backStopsData]);
     setIsLoading(false);
-  }, [region, routeName, searchRoutes]
+  }, [location.state, region, routeName, searchRoutes]
   );
 
   useEffect(() => {

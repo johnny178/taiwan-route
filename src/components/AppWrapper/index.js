@@ -1,11 +1,14 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavigationBar from '../NavigationBar';
 import { Container, Wrapper } from './styles';
-// import { useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 const AppWrapper = (props) => {
-  // const location = useLocation();
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [location.pathname]);
 
   return (
     <>

@@ -144,6 +144,7 @@ export const ResultCont = styled.div``;
 
 export const ItemCont = styled.div`
   display: flex;
+  border-bottom: 1px solid rgba(227, 227, 227, .4);
 `;
 
 export const ResultItem = styled(Link)`
@@ -151,7 +152,6 @@ export const ResultItem = styled(Link)`
   flex: 1;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(227, 227, 227, .4);
   padding: 7px 0 7px 3%;
 `;
 

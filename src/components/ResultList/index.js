@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Block, Container, Line, Section, NearbyStationBtn, RefreshBtn, RefreshIcon, Triangle, ResultCont, ResultItem, DirectionCont, Busdirection, BusStateText, TextMedium, TextSmall, TextLarge, TextExtraSmall, LoveBtn, Icon, ItemCont } from './styles';
 
@@ -11,14 +10,20 @@ import LoveMediium from '../../images/我的收藏icon@2x.png';
 import unLoveSmall from '../../images/愛心(未選).png';
 import unLoveMedium from '../../images/愛心(未選)@2x.png';
 
-
-const ResultList = ({ data, mode, region }) => {
+const ResultList = ({ data, mode }) => {
   const [isPressed, setIsPressed] = useState(false);
-  const favoriteRoutes = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
+  const [favoriteRoutesData, setFavoriteRoutesData] = useState(localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {});
 
+  const pressFavoriteBtn = e => {
+    let storedData = Object.assign({}, favoriteRoutesData);
+    delete storedData[e.target.id];
+    localStorage['favoriteRoutes'] = JSON.stringify(storedData);
+    setFavoriteRoutesData(storedData);
+  };
 
-  const setFavoriteRoute = routeData => {
-    let storedData = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
+  const pressLoveBtn = e => {
+    let routeData = data[e.target.id];
+    let storedData = Object.assign({}, favoriteRoutesData);
 
     if (storedData[routeData.RouteUID]) {
       //如果已儲存過，則移除
@@ -28,12 +33,22 @@ const ResultList = ({ data, mode, region }) => {
       storedData[routeData.RouteUID] = routeData;
     }
     localStorage['favoriteRoutes'] = JSON.stringify(storedData);
+    setFavoriteRoutesData(storedData);
   };
 
-  const pressLoveBtn = data => {
-    console.log(data)
-    setFavoriteRoute(data);
-  };
+  // const setFavoriteRoute = routeData => {
+  //   let storedData = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
+
+  //   if (storedData[routeData.RouteUID]) {
+  //     //如果已儲存過，則移除
+  //     delete storedData[routeData.RouteUID];
+  //   } else {
+  //     //新增最愛路線
+  //     storedData[routeData.RouteUID] = routeData;
+  //   }
+  //   localStorage['favoriteRoutes'] = JSON.stringify(storedData);
+  //   setFavoriteRoutesData(storedData);
+  // };
 
   const renderSearchHeader = () => {
     let headerText = mode === Mode.SEARCH ? '搜尋結果' : '我的收藏';
@@ -112,27 +127,33 @@ const ResultList = ({ data, mode, region }) => {
     return (
       <ResultCont>
         {
-          data.map(item => {
+          Object.values(favoriteRoutesData).map(item => {
             return (
-              <ResultItem
-                key={item.RouteID}
-                to={{
-                  pathname: `/${item.RouteName.Zh_tw}}`,
-                  search: `?region=${countryDic[region]}`,
-                }}
-                state={item}
-              >
-                <Block>
-                  <TextLarge>{item.RouteName.Zh_tw}</TextLarge>
-                  <TextMedium>{`${item.DepartureStopNameZh} - ${item.DestinationStopNameZh}`}</TextMedium>
-                </Block>
-                <Block>
-                  <LoveBtn>
-                    <Icon src={LoveSmall} srcSet={`${LoveSmall} 1x, ${LoveMediium} 2x`} />
-                    <TextSmall>{'高雄'}</TextSmall>
-                  </LoveBtn>
-                </Block>
-              </ResultItem>
+              <ItemCont key={item.RouteUID}>
+                <ResultItem
+                  to={{
+                    pathname: `/${item.RouteName.Zh_tw}}`,
+                    search: `?region=${item.City}&routeUID=${item.RouteUID}`,
+                  }}
+                  state={item}
+                >
+                  <Block>
+                    <TextLarge>{item.RouteName.Zh_tw}</TextLarge>
+                    <TextMedium>{`${item.DepartureStopNameZh} - ${item.DestinationStopNameZh}`}</TextMedium>
+                  </Block>
+                  <Block>
+                  </Block>
+                </ResultItem>
+                <LoveBtn>
+                  <Icon
+                    src={LoveSmall}
+                    srcSet={`${LoveSmall} 1x, ${LoveMediium} 2x`}
+                    id={item.RouteUID}
+                    onClick={pressFavoriteBtn}
+                  />
+                  <TextSmall>{Object.keys(countryDic).find(key => countryDic[key] === item.City)}</TextSmall>
+                </LoveBtn>
+              </ItemCont>
             );
           })
         }
@@ -144,13 +165,13 @@ const ResultList = ({ data, mode, region }) => {
     return (
       <ResultCont>
         {
-          data.map(item => {
+          data.map((item, index) => {
             return (
-              <ItemCont key={item.RouteID}>
+              <ItemCont key={item.RouteUID}>
                 <ResultItem
                   to={{
                     pathname: `/${item.RouteName.Zh_tw}}`,
-                    search: `?region=${countryDic[region]}`,
+                    search: `?region=${item.City}&routeUID=${item.RouteUID}`,
                   }}
                   state={item}
                 >
@@ -160,11 +181,21 @@ const ResultList = ({ data, mode, region }) => {
                   </Block>
                 </ResultItem>
 
-                <LoveBtn onClick={e => pressLoveBtn(e)}>
+                <LoveBtn>
                   {
-                    favoriteRoutes.RouteUID === item.RouteUID ?
-                      <Icon src={LoveSmall} srcSet={`${LoveSmall} 1x, ${LoveMediium} 2x`} /> :
-                      <Icon src={unLoveSmall} srcSet={`${unLoveSmall} 1x, ${unLoveMedium} 2x`} />
+                    favoriteRoutesData[item.RouteUID] ?
+                      <Icon
+                        src={LoveSmall}
+                        srcSet={`${LoveSmall} 1x, ${LoveMediium} 2x`}
+                        id={index}
+                        onClick={pressLoveBtn}
+                      /> :
+                      <Icon
+                        src={unLoveSmall}
+                        srcSet={`${unLoveSmall} 1x, ${unLoveMedium} 2x`}
+                        id={index}
+                        onClick={pressLoveBtn}
+                      />
                   }
                 </LoveBtn>
               </ItemCont>

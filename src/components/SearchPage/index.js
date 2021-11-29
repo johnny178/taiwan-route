@@ -34,14 +34,20 @@ const SearchPage = () => {
         searchRoutes(searchValue);
         break;
       case Mode.FAVORITE:
+        setSearchValue('');
         break;
       case Mode.NEARBY:
+        setSearchValue('');
         // searchNeabyRoutes();
         break;
       default:
         break;
     }
   }, [searchValue, mode, region, searchRoutes]);
+
+  useEffect(() => {
+    setMode(Mode.SEARCH);
+  }, [region]);
 
   /*
   const searchNeabyRoutes = async () => {
@@ -103,7 +109,6 @@ const SearchPage = () => {
       <ResultList
         data={routeData}
         mode={mode}
-        region={region}
       />
     </Container>
   );
