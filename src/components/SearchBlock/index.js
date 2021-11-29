@@ -12,11 +12,11 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
   const [isFilterPressed, setIsFilterPressed] = useState(false);
 
   const pressFavorite = () => {
-    setMode(Mode.FAVORITE);
+    mode !== Mode.FAVORITE ? setMode(Mode.FAVORITE) : setMode(Mode.SEARCH);
   };
 
   const pressNearby = () => {
-    setMode(Mode.NEARBY);
+    mode !== Mode.NEARBY ? setMode(Mode.NEARBY) : setMode(Mode.SEARCH);
   };
 
   const pressMode = () => {

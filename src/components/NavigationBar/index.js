@@ -34,7 +34,7 @@ const NavigationBar = () => {
   );
 
   const pressLoveBtn = () => {
-    let storedData = Object.assign({}, favoriteRoutesData);
+    let storedData = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
     if (storedData[routerUID]) {
       //如果已儲存過，則移除
       delete storedData[routerUID];
