@@ -6,6 +6,8 @@ import { Mode, countryDic } from '../../constants';
 import RefreshSmall from '../../images/重新整理icon.png';
 import RefreshMedium from '../../images/重新整理icon@2x.png';
 // import LoveSmall from '../../images/我的收藏icon.png';
+// import LoveMediium from '../../images/我的收藏icon@2x.png';
+
 
 const ResultList = ({ data, mode, region }) => {
   const [isPressed, setIsPressed] = useState(false);
