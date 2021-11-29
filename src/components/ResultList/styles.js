@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   /* display: flex;
@@ -142,8 +142,13 @@ export const Line = styled.div`
 
 export const ResultCont = styled.div``;
 
-export const ResultItem = styled(NavLink)`
+export const ItemCont = styled.div`
   display: flex;
+`;
+
+export const ResultItem = styled(Link)`
+  display: flex;
+  flex: 1;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(227, 227, 227, .4);
@@ -151,9 +156,10 @@ export const ResultItem = styled(NavLink)`
 `;
 
 export const LoveBtn = styled.button`
-
+  cursor: pointer;
 `;
 
 export const Icon = styled.img`
   object-fit: cover;
+  transform: scale(0.8);
 `;

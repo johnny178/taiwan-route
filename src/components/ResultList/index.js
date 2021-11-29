@@ -1,16 +1,39 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Block, Container, Line, Section, NearbyStationBtn, RefreshBtn, RefreshIcon, Triangle, ResultCont, ResultItem, DirectionCont, Busdirection, BusStateText, TextMedium, TextSmall, TextLarge, TextExtraSmall, LoveBtn, Icon } from './styles';
+import { Block, Container, Line, Section, NearbyStationBtn, RefreshBtn, RefreshIcon, Triangle, ResultCont, ResultItem, DirectionCont, Busdirection, BusStateText, TextMedium, TextSmall, TextLarge, TextExtraSmall, LoveBtn, Icon, ItemCont } from './styles';
 
 import { Mode, countryDic } from '../../constants';
 
 import RefreshSmall from '../../images/重新整理icon.png';
 import RefreshMedium from '../../images/重新整理icon@2x.png';
-// import LoveSmall from '../../images/我的收藏icon.png';
-// import LoveMediium from '../../images/我的收藏icon@2x.png';
+import LoveSmall from '../../images/我的收藏icon.png';
+import LoveMediium from '../../images/我的收藏icon@2x.png';
+import unLoveSmall from '../../images/愛心(未選).png';
+import unLoveMedium from '../../images/愛心(未選)@2x.png';
 
 
 const ResultList = ({ data, mode, region }) => {
   const [isPressed, setIsPressed] = useState(false);
+  const favoriteRoutes = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
+
+
+  const setFavoriteRoute = routeData => {
+    let storedData = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
+
+    if (storedData[routeData.RouteUID]) {
+      //如果已儲存過，則移除
+      delete storedData[routeData.RouteUID];
+    } else {
+      //新增最愛路線
+      storedData[routeData.RouteUID] = routeData;
+    }
+    localStorage['favoriteRoutes'] = JSON.stringify(storedData);
+  };
+
+  const pressLoveBtn = data => {
+    console.log(data)
+    setFavoriteRoute(data);
+  };
 
   const renderSearchHeader = () => {
     let headerText = mode === Mode.SEARCH ? '搜尋結果' : '我的收藏';
@@ -85,7 +108,7 @@ const ResultList = ({ data, mode, region }) => {
     );
   };
 
-  const renderStation = () => {
+  const renderFabvoriteStation = () => {
     return (
       <ResultCont>
         {
@@ -103,10 +126,49 @@ const ResultList = ({ data, mode, region }) => {
                   <TextLarge>{item.RouteName.Zh_tw}</TextLarge>
                   <TextMedium>{`${item.DepartureStopNameZh} - ${item.DestinationStopNameZh}`}</TextMedium>
                 </Block>
-                <LoveBtn>
-                  <Icon />
-                </LoveBtn>
+                <Block>
+                  <LoveBtn>
+                    <Icon src={LoveSmall} srcSet={`${LoveSmall} 1x, ${LoveMediium} 2x`} />
+                    <TextSmall>{'高雄'}</TextSmall>
+                  </LoveBtn>
+                </Block>
               </ResultItem>
+            );
+          })
+        }
+      </ResultCont >
+    );
+  };
+
+  const renderStation = () => {
+    return (
+      <ResultCont>
+        {
+          data.map(item => {
+            return (
+              <ItemCont key={item.RouteID}>
+                <ResultItem
+                  to={{
+                    pathname: `/${item.RouteName.Zh_tw}}`,
+                    search: `?region=${countryDic[region]}`,
+                  }}
+                  state={item}
+                >
+                  <Block>
+                    <TextLarge>{item.RouteName.Zh_tw}</TextLarge>
+                    <TextMedium>{`${item.DepartureStopNameZh} - ${item.DestinationStopNameZh}`}</TextMedium>
+                  </Block>
+                </ResultItem>
+
+                <LoveBtn onClick={e => pressLoveBtn(e)}>
+                  {
+                    favoriteRoutes.RouteUID === item.RouteUID ?
+                      <Icon src={LoveSmall} srcSet={`${LoveSmall} 1x, ${LoveMediium} 2x`} /> :
+                      <Icon src={unLoveSmall} srcSet={`${unLoveSmall} 1x, ${unLoveMedium} 2x`} />
+                  }
+                </LoveBtn>
+              </ItemCont>
+
             );
           })
         }
@@ -118,7 +180,7 @@ const ResultList = ({ data, mode, region }) => {
     <Container>
       {mode === Mode.NEARBY ? renderNeabyHeader() : renderSearchHeader()}
       <Line />
-      {mode === Mode.NEARBY ? renderNearbyStation() : renderStation()}
+      {mode === Mode.NEARBY ? renderNearbyStation() : (mode === Mode.FAVORITE ? renderFabvoriteStation() : renderStation())}
     </Container>
   );
 };
