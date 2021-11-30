@@ -3,14 +3,15 @@ import ResultList from '../ResultList';
 import SearchBlock from '../SearchBlock';
 
 import { countryDic, Mode } from '../../constants';
-import { getCityBusRoutes/*, getCityBusStops */ } from '../../api';
+import { getCityBusRoutes, getNearbyBusStation } from '../../api';
 import { Container } from './styles';
 
 const SearchPage = () => {
   const [mode, setMode] = useState(Mode.SEARCH);
   const [routeData, setRouteData] = useState([]);
   const [searchValue, setSearchValue] = useState('');
-  const [region, setRegion] = useState('臺北市');
+  const [nearbyStationData, setNearbyStationData] = useState([]);
+  const [region, setRegion] = useState('高雄市');
   // const [location, setLocation] = useState({ latitude: '', longitude: '' });
 
   const searchRoutes = useCallback(async (searchValue) => {
@@ -38,7 +39,7 @@ const SearchPage = () => {
         break;
       case Mode.NEARBY:
         setSearchValue('');
-        // searchNeabyRoutes();
+        searchNearbyStation();
         break;
       default:
         break;
@@ -49,9 +50,8 @@ const SearchPage = () => {
     setMode(Mode.SEARCH);
   }, [region]);
 
-  /*
-  const searchNeabyRoutes = async () => {
-    // let nearbyRoutesData = {};
+  const searchNearbyStation = async () => {
+    let nearbyRoutesData = [];
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -62,12 +62,18 @@ const SearchPage = () => {
           ]);
 
           try {
-            let resp = await getCityBusStops(countryDic['臺北市'], searchParam);
-            setRouteData(resp.data);
-            console.log('YOYO', resp.data)
+            let resp = await getNearbyBusStation(searchParam);
+            //過濾重複的StationID
+            resp.data = resp.data.filter((thing, index, self) =>
+              index === self.findIndex((t) => (
+                t.StationID === thing.StationID
+              ))
+            );
+            setNearbyStationData(resp.data);
+            console.log('YOYO', resp.data);
 
             let temp = {};
-            searchParam = new URLSearchParams([
+            let routeSearchParam = new URLSearchParams([
               ['$orderby', 'RouteName/Zh_tw'],
               ['$format', 'JSON'],
             ]);
@@ -77,11 +83,24 @@ const SearchPage = () => {
               temp['StationName'] = item.Zh_tw;
               temp['Stops'] = [];
               item.Stops.forEach(async (item) => {
-                let stopData = {};
-                // let resp = await getCityBusRoutes(countryDic['臺北市'], item.RouteName.Zh_tw, searchParam);
+                try {
+                  let routeName = item.RouteName.Zh_tw;
+                  let resp = await getCityBusRoutes('Taipei', routeName, routeSearchParam);
 
-                stopData['routeName'] = item.RouteName.Zh_tw;
-                // stopData['departureDestination'] =
+                  resp = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
+                  console.log('YOYO2', resp);
+
+                  // temp['Stops'].push({
+                  //   DepartureStopNameZh: resp[0].DepartureStopNameZh,
+                  //   DestinationStopNameZh: resp[0].DestinationStopNameZh,
+                  //   routeName: item.RouteName.Zh_tw,
+                  // });
+
+                  nearbyRoutesData.push(temp);
+                } catch (error) {
+                  console.log(error);
+                }
+
               });
             });
           } catch (error) {
@@ -94,7 +113,6 @@ const SearchPage = () => {
     }
 
   };
-  */
 
   return (
     <Container>
@@ -107,8 +125,9 @@ const SearchPage = () => {
         setRegion={setRegion}
       />
       <ResultList
-        data={routeData}
+        routeData={routeData}
         mode={mode}
+        nearbyStationData={nearbyStationData}
       />
     </Container>
   );

@@ -7,7 +7,9 @@ const AppWrapper = (props) => {
   const location = useLocation();
 
   useEffect(() => {
-    window.scroll(0, 0);
+    window.scrollTo({
+      top: 0,
+    });
   }, [location.pathname]);
 
   return (

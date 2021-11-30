@@ -40,6 +40,12 @@ const getBusEstimatedTime = axios.create({
   headers: getAuthorizationHeader(),
 });
 
+//查詢附近公車站牌
+const getNearbyStation = axios.create({
+  baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/Station/NearBy',
+  headers: getAuthorizationHeader(),
+});
+
 //公車之路線資料
 export const getCityBusRoutes = (city, routeName, searchParam = '') => getBusRoutes.get(`/${city}/${routeName}?${searchParam}`);
 
@@ -52,6 +58,5 @@ export const getCityBusStopOrder = (city, routeName, searchParam = '') => getBus
 //公車之預估到站資料
 export const getCityBusEstimatedTime = (city, routeName, searchParam = '') => getBusEstimatedTime.get(`/${city}/${routeName}?${searchParam}`);
 
-// //市區公車之路線資料
-// export const getAllScenicSpots = searchParam => getBusRoutes.get(searchParam ? `?${searchParam}` : '');
-// export const getSpecificScenicSpots = (area, searchParam = '') => getBusRoutes.get(`/${area}?${searchParam}`);
+//查詢附近站牌資料
+export const getNearbyBusStation = (searchParam = '') => getNearbyStation.get(`?${searchParam}`);

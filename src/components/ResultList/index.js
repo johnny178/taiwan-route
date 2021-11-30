@@ -10,7 +10,7 @@ import LoveMediium from '../../images/我的收藏icon@2x.png';
 import unLoveSmall from '../../images/愛心(未選).png';
 import unLoveMedium from '../../images/愛心(未選)@2x.png';
 
-const ResultList = ({ data, mode }) => {
+const ResultList = ({ routeData, nearbyStationData, mode }) => {
   const [isPressed, setIsPressed] = useState(false);
   const [favoriteRoutesData, setFavoriteRoutesData] = useState(localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {});
 
@@ -22,7 +22,7 @@ const ResultList = ({ data, mode }) => {
   };
 
   const pressLoveBtn = e => {
-    let routeData = data[e.target.id];
+    let routeData = routeData[e.target.id];
     let storedData = Object.assign({}, favoriteRoutesData);
 
     if (storedData[routeData.RouteUID]) {
@@ -35,20 +35,6 @@ const ResultList = ({ data, mode }) => {
     localStorage['favoriteRoutes'] = JSON.stringify(storedData);
     setFavoriteRoutesData(storedData);
   };
-
-  // const setFavoriteRoute = routeData => {
-  //   let storedData = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
-
-  //   if (storedData[routeData.RouteUID]) {
-  //     //如果已儲存過，則移除
-  //     delete storedData[routeData.RouteUID];
-  //   } else {
-  //     //新增最愛路線
-  //     storedData[routeData.RouteUID] = routeData;
-  //   }
-  //   localStorage['favoriteRoutes'] = JSON.stringify(storedData);
-  //   setFavoriteRoutesData(storedData);
-  // };
 
   const renderSearchHeader = () => {
     let headerText = mode === Mode.SEARCH ? '搜尋結果' : '我的收藏';
@@ -83,9 +69,10 @@ const ResultList = ({ data, mode }) => {
     return (
       <ResultCont>
         {
-          data.map(item => {
+          nearbyStationData.map((item, index) => {
+            if (!item.StationAddress) return;
             return (
-              <React.Fragment key={item.StationID}>
+              <React.Fragment key={index}>
                 <NearbyStationBtn onClick={() => setIsPressed(prevIsPressed => !prevIsPressed)} >
                   {item.StationAddress}
                   <Triangle isPressed={isPressed} />
@@ -165,7 +152,7 @@ const ResultList = ({ data, mode }) => {
     return (
       <ResultCont>
         {
-          data.map((item, index) => {
+          routeData.map((item, index) => {
             return (
               <ItemCont key={item.RouteUID}>
                 <ResultItem

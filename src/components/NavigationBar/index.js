@@ -12,10 +12,11 @@ import unLoveMedium from '../../images/愛心(未選)@2x.png';
 import { getCityBusRoutes } from '../../api';
 
 const NavigationBar = () => {
+  let storedData = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
   const [searchParam, setSearchParam] = useSearchParams();
   const location = useLocation();
+  const [favoriteRoutesData, setFavoriteRoutesData] = useState(storedData);
   const routerUID = searchParam.get('routeUID');
-  const [favoriteRoutesData, setFavoriteRoutesData] = useState(localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {});
   let routeName = decodeURI(location.pathname).slice(1, -1);
 
   const searchRoutes = useCallback(async () => {
@@ -34,7 +35,7 @@ const NavigationBar = () => {
   );
 
   const pressLoveBtn = () => {
-    let storedData = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
+    let storedData = Object.assign({}, favoriteRoutesData);
     if (storedData[routerUID]) {
       //如果已儲存過，則移除
       delete storedData[routerUID];
@@ -51,7 +52,7 @@ const NavigationBar = () => {
   };
 
   const renderLoveBtn = () => {
-    if (favoriteRoutesData[routerUID]) {
+    if (storedData[routerUID]) {
       return (
         <LoveIcon
           src={LoveSmall}
