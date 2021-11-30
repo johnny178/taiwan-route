@@ -57,7 +57,7 @@ const SearchPage = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           let searchParam = new URLSearchParams([
-            ['$spatialFilter', `nearby(${position.coords.latitude}, ${position.coords.longitude},100)`],
+            ['$spatialFilter', `nearby(${position.coords.latitude}, ${position.coords.longitude},250)`],
             ['$format', 'JSON'],
           ]);
 
@@ -125,7 +125,7 @@ const SearchPage = () => {
         setRegion={setRegion}
       />
       <ResultList
-        routeData={routeData}
+        routesData={routeData}
         mode={mode}
         nearbyStationData={nearbyStationData}
       />

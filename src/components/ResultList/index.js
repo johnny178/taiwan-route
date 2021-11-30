@@ -10,7 +10,7 @@ import LoveMediium from '../../images/我的收藏icon@2x.png';
 import unLoveSmall from '../../images/愛心(未選).png';
 import unLoveMedium from '../../images/愛心(未選)@2x.png';
 
-const ResultList = ({ routeData, nearbyStationData, mode }) => {
+const ResultList = ({ routesData, nearbyStationData, mode }) => {
   const [isPressed, setIsPressed] = useState(false);
   const [favoriteRoutesData, setFavoriteRoutesData] = useState(localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {});
 
@@ -22,7 +22,7 @@ const ResultList = ({ routeData, nearbyStationData, mode }) => {
   };
 
   const pressLoveBtn = e => {
-    let routeData = routeData[e.target.id];
+    let routeData = routesData[e.target.id];
     let storedData = Object.assign({}, favoriteRoutesData);
 
     if (storedData[routeData.RouteUID]) {
@@ -152,7 +152,7 @@ const ResultList = ({ routeData, nearbyStationData, mode }) => {
     return (
       <ResultCont>
         {
-          routeData.map((item, index) => {
+          routesData.map((item, index) => {
             return (
               <ItemCont key={item.RouteUID}>
                 <ResultItem
