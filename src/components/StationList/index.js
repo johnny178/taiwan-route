@@ -12,7 +12,7 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
 
   const renderStopsList = () => {
     return (
-      stopOrderData[direction]?.Stops.map(item => {
+      stopOrderData[direction]?.Stops.map((item, index) => {
         const {
           StopStatus,
           EstimateTime,
@@ -36,7 +36,6 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
           return busStateStyle.normal;
         };
 
-        // console.log(stopsData[direction][item.StopID]);
         const timeText = () => {
           if (StopStatus !== 0 || StopStatus === undefined) {
             if (estimateTime) return estimateTime;
@@ -60,7 +59,7 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
 
         return (
           <StationCell key={item.StopID}>
-            <TextMedium color={'#E3E3E3'}>{item.StopName.Zh_tw}</TextMedium>
+            <TextMedium color={'#E3E3E3'} num={index + 1}>{item.StopName.Zh_tw}</TextMedium>
             <TimeCont>
               <Time
                 isShowMinText={Number.isInteger(timeText())}

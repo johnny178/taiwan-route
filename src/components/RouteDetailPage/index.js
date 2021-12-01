@@ -12,7 +12,7 @@ import Wkt from 'wicket';
 const RouteDetailPage = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
-  const [refreshTime, setRefreshTime] = useState(30);
+  const [refreshTime, setRefreshTime] = useState(10);
   const [urlSearchParam, setUrlSeachParam] = useSearchParams();
   const [busStopOrder, setBusStopOrder] = useState([]);
   const [departureDestination, setDepartureDestination] = useState([]);
@@ -139,12 +139,12 @@ const RouteDetailPage = () => {
   );
 
   useEffect(() => {
-    refreshTime === 30 && getData();
+    refreshTime === 10 && getData();
   }, [refreshTime, getData]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setRefreshTime(prevRefreshTime => prevRefreshTime === 0 ? 30 : prevRefreshTime -= 1);
+      setRefreshTime(prevRefreshTime => prevRefreshTime === 0 ? 10 : prevRefreshTime -= 1);
     }, 1000);
     return () => {
       clearInterval(timer);
@@ -157,12 +157,6 @@ const RouteDetailPage = () => {
 
   return (
     <Container>
-      <Map
-        busStopOrder={busStopOrder}
-        geometry={geometry}
-        direction={direction}
-        busDynamicPostionData={busDynamicPostionData}
-      />
       <StationList
         departureDestination={departureDestination}
         stopOrderData={busStopOrder}
@@ -170,6 +164,12 @@ const RouteDetailPage = () => {
         refreshTime={refreshTime}
         direction={direction}
         setDirection={setDirection}
+      />
+      <Map
+        busStopOrder={busStopOrder}
+        geometry={geometry}
+        direction={direction}
+        busDynamicPostionData={busDynamicPostionData}
       />
     </Container>
   );

@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 
 export const Container = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   width: 100%;
 `;
@@ -101,6 +102,11 @@ export const TextSmall = styled(Text)`
 export const TextMedium = styled(Text)`
   text-align: left;
   font-size: 1rem;
+
+  &::before {
+    content: ' ${({ num }) => num}';
+    margin-right: 10px;
+  }
 `;
 
 export const TextLarge = styled(Text)`

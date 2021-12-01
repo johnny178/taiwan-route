@@ -7,6 +7,8 @@ export const Container = styled.div`
   @media (min-width: 996px) {
     flex-direction: row;
     justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 3%;
   }
 `;
 
