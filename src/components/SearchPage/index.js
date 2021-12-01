@@ -10,9 +10,8 @@ const SearchPage = () => {
   const [mode, setMode] = useState(Mode.SEARCH);
   const [routeData, setRouteData] = useState([]);
   const [searchValue, setSearchValue] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const [nearbyStationData, setNearbyStationData] = useState([]);
-  const [region, setRegion] = useState('高雄市');
+  const [region, setRegion] = useState('臺北市');
   // const [location, setLocation] = useState({ latitude: '', longitude: '' });
 
   const searchRoutes = useCallback(async (searchValue) => {
@@ -24,7 +23,6 @@ const SearchPage = () => {
     try {
       let resp = await getCityBusRoutes(countryDic[region], searchValue, searchParam);
       setRouteData(resp.data);
-      setIsLoading(false);
     } catch (error) {
       console.log('get bus routes error', error);
     }
@@ -34,7 +32,6 @@ const SearchPage = () => {
   useEffect(() => {
     switch (mode) {
       case Mode.SEARCH:
-        setIsLoading(true);
         searchRoutes(searchValue);
         break;
       case Mode.FAVORITE:
@@ -42,7 +39,6 @@ const SearchPage = () => {
         break;
       case Mode.NEARBY:
         setSearchValue('');
-        setIsLoading(true);
         searchNearbyStation();
         break;
       default:
@@ -106,7 +102,6 @@ const SearchPage = () => {
               }
             });
             setNearbyStationData(nearbyRoutesData);
-            setIsLoading(false);
           } catch (error) {
             console.log('get bus routes error', error);
           }
@@ -132,7 +127,6 @@ const SearchPage = () => {
         routesData={routeData}
         mode={mode}
         nearbyStationData={nearbyStationData}
-        isLoading={isLoading}
       />
     </Container>
   );

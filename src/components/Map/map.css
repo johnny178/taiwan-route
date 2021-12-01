@@ -1,0 +1,16 @@
+.leaflet-container {
+  height: 500px;
+  width: 100%;
+  border-radius: 10px;
+}  
+
+.leaflet-tooltip
+{
+  background-color: transparent;
+  border: 0;
+  box-shadow: unset;
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-align: center;
+  color: #FFFFFF;
+}

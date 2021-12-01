@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, DirectionBtn, Header, StationCell, HeaderText, TextMedium, Time, TimeCont/*, BusPosition */ } from './styles';
 
-const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTime }) => {
-  const [direction, setDirection] = useState(0);//0去程 1返程
+const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTime, direction, setDirection }) => {
 
   const parseIsoDatetime = dtstr => {
     if (!dtstr) return;

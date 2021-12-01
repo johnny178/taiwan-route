@@ -9,9 +9,8 @@ import LoveSmall from '../../images/我的收藏icon.png';
 import LoveMediium from '../../images/我的收藏icon@2x.png';
 import unLoveSmall from '../../images/愛心(未選).png';
 import unLoveMedium from '../../images/愛心(未選)@2x.png';
-import Loader from '../Loader';
 
-const ResultList = ({ routesData, nearbyStationData, mode, isLoading }) => {
+const ResultList = ({ routesData, nearbyStationData, mode }) => {
   const [isPressed, setIsPressed] = useState(false);
   const [favoriteRoutesData, setFavoriteRoutesData] = useState(localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {});
 
@@ -193,10 +192,6 @@ const ResultList = ({ routesData, nearbyStationData, mode, isLoading }) => {
       </ResultCont >
     );
   };
-
-  if (isLoading) {
-    return (<Loader />);
-  }
 
   return (
     <Container>
