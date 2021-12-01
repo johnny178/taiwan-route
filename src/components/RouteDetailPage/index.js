@@ -49,7 +49,6 @@ const RouteDetailPage = () => {
       let goBus = resp.filter(item => !item.Direction);//去程
       let backBus = resp.filter(item => item.Direction);//回程
       setBusDynamicPostionData([goBus, backBus]);
-      // console.log([goBus, backBus]);
     } catch (error) {
       console.log('get bus real time by frequency error', error);
     }
@@ -162,6 +161,7 @@ const RouteDetailPage = () => {
         busStopOrder={busStopOrder}
         geometry={geometry}
         direction={direction}
+        busDynamicPostionData={busDynamicPostionData}
       />
       <StationList
         departureDestination={departureDestination}
@@ -170,7 +170,6 @@ const RouteDetailPage = () => {
         refreshTime={refreshTime}
         direction={direction}
         setDirection={setDirection}
-        busDynamicPostionData={busDynamicPostionData}
       />
     </Container>
   );

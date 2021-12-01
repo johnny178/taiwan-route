@@ -6,12 +6,24 @@ import { Icon } from 'leaflet';
 import './map.css';
 import StationIconMedium from '../../images/站牌icon@2x.png';
 import GoBusIconMedium from '../../images/去程公車icon@2x.png';
+import BackBusIconMedium from '../../images/回程公車icon@2x.png';
 
 const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData }) => {
   const station = new Icon({
     iconUrl: StationIconMedium,
     iconSize: [21, 28]
   });
+
+  const goBus = new Icon({
+    iconUrl: GoBusIconMedium,
+    iconSize: [56, 30]
+  });
+
+  const backBus = new Icon({
+    iconUrl: BackBusIconMedium,
+    iconSize: [56, 30]
+  });
+
   const pathColor = { color: '#5D4F6E' };
 
   const setCenterPostion = React.useMemo(() => {
@@ -25,7 +37,7 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData }) => {
     centerLon /= busStopOrder[direction].Stops.length;
     return ([centerLat, centerLon]);
   }, [busStopOrder, direction]);
-  console.log(busDynamicPostionData)
+
   return (
     <MapContainer center={[setCenterPostion[0], setCenterPostion[1]]} zoom={14} scrollWheelZoom={false}>
       <Polyline pathOptions={pathColor} positions={geometry} />
@@ -45,15 +57,12 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData }) => {
           </Marker>
         ))
       }
-      {/* {
+      {
         busDynamicPostionData[direction].map(item => (
-          <Marker key={item.PlateNumb} position={[item.BusPosition.PositionLat, item.BusPosition.PositionLon]} icon={GoBusIconMedium}>
-            <Popup>
-              {item.StopName.Zh_tw}
-            </Popup>
+          <Marker key={item.PlateNumb} position={[item.BusPosition.PositionLat, item.BusPosition.PositionLon]} icon={direction ? backBus : goBus}>
           </Marker>
         ))
-      } */}
+      }
     </MapContainer>
   );
 };
