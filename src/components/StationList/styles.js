@@ -41,19 +41,6 @@ export const DirectionBtn = styled.button`
 `;
 
 //動態時刻表
-export const StopListCont = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 24%;
-  overflow: scroll;
-  overflow-x: hidden;
-
-  @media (min-width: 996px) {
-    height: 78vh;
-  }
-`;
-
 export const StationCell = styled.button`
   cursor: pointer;
   display: flex;

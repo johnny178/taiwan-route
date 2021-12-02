@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-import * as Scroll from 'react-scroll';
-import { Container, DirectionBtn, Header, StationCell, HeaderText, TextMedium, Time, TimeCont, BusPosition, BusLine, BusPlateNum, StopListCont } from './styles';
+import { Container, DirectionBtn, Header, StationCell, HeaderText, TextMedium, Time, TimeCont, BusPosition, BusLine, BusPlateNum } from './styles';
 
 const busStateStyle = {
   normal: ['#77797D', '#E3E3E3'],
@@ -103,9 +101,7 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
         <HeaderText color={'#E3E3E3'}>{`${refreshTime}秒後刷新`}</HeaderText>
         <DirectionBtn onClick={() => setDirection(1)} isActive={1 === direction}>{departureDestination[1]}</DirectionBtn>
       </Header>
-      <StopListCont>
-        {renderStopsList()}
-      </StopListCont>
+      {renderStopsList()}
     </Container>
   );
 };
