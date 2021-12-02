@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AppWrapper from './components/AppWrapper';
 import RouteDetailPage from './components/RouteDetailPage';
 // import HomePage from './components/HomePage';
@@ -12,14 +12,7 @@ function App() {
         <Routes>
           <Route path='/' element={<SearchPage />} />
           <Route path='/:routeId' element={<RouteDetailPage />} />
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: '1rem' }}>
-                <p>Not found</p>
-              </main>
-            }
-          />
+          <Route path="/*" element={<Navigate replace to="/" />} />
         </Routes>
       </AppWrapper>
     </BrowserRouter>

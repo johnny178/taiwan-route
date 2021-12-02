@@ -31,7 +31,7 @@ const nowPlace = new Icon({
 
 const pathColor = { color: '#5D4F6E' };
 
-const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData }) => {
+const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap }) => {
   const [currentLocation, setCurrentLocation] = useState([]);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData }) => {
   const renderMap = () => {
     return (
       <MapWrapper>
-        <MapContainer center={[centerPosition[0], centerPosition[1]]} zoom={14} scrollWheelZoom={false}>
+        <MapContainer center={[centerPosition[0], centerPosition[1]]} zoom={14} scrollWheelZoom={false} whenCreated={setMap}>
           <Polyline pathOptions={pathColor} positions={geometry} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -101,15 +101,15 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData }) => {
       {renderMap()}
       <ItemCont>
         <Item>
-          <Image src={BackBusIcon} width={'55px'} />
+          <Image src={BackBusIcon} width={'45px'} />
           <Text>公車位置</Text>
         </Item>
         <Item>
-          <Image src={Location} width={'30px'} />
+          <Image src={Location} width={'20px'} />
           <Text>您的位置</Text>
         </Item>
         <Item>
-          <Image src={StationIcon} width={'20px'} />
+          <Image src={StationIcon} width={'15px'} />
           <Text>公車車牌</Text>
         </Item>
       </ItemCont>

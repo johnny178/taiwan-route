@@ -41,14 +41,14 @@ const getBusShape = axios.create({
   baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/Shape/City',
 });
 
-//查詢附近公車站牌
-const getNearbyStation = axios.create({
-  baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/Station/NearBy',
-});
-
 //公車之動態定時資料
 const getRealTimeByFrequency = axios.create({
   baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeByFrequency/City',
+});
+
+//公車之所在站點位置
+const getRealTimeNearStop = axios.create({
+  baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeNearStop/City',
 });
 
 //公車之路線資料
@@ -69,8 +69,5 @@ export const getCityBusShape = (city, routeName, searchParam = '') => getBusShap
 //公車之動態定時資料
 export const getCityBusRealTimeByFrequency = (city, routeName, searchParam = '') => getRealTimeByFrequency.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
 
-
-
-
-//查詢附近站牌資料
-export const getNearbyBusStation = (searchParam = '') => getNearbyStation.get(`?${searchParam}`, { headers: getAuthorizationHeader() });
+//公車之所在站點位置
+export const getCityBusRealTimeNearStop = (city, routeName, searchParam = '') => getRealTimeNearStop.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });

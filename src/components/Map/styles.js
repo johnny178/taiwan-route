@@ -21,16 +21,22 @@ export const MapWrapper = styled.div`
   position: relative;
   width: 100%;
   padding-top: 61%;
+  border-radius: 10px;
+  margin-bottom: 10px;
 `;
 
 export const ItemCont = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 export const Item = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 25px;
+
+  &:not(:last-child){
+    margin-right: 20px;
+  }
 `;
 
 export const Image = styled.img`
@@ -41,7 +47,8 @@ export const Image = styled.img`
 `;
 
 export const Text = styled.p`
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #5D4F6E;
   font-weight: 500;
+  white-space: nowrap;
 `;

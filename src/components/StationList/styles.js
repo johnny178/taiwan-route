@@ -41,21 +41,37 @@ export const DirectionBtn = styled.button`
 `;
 
 //動態時刻表
-export const StationCell = styled.div`
+export const StopListCont = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 24%;
+  overflow: scroll;
+  overflow-x: hidden;
+
+  @media (min-width: 996px) {
+    height: 78vh;
+  }
+`;
+
+export const StationCell = styled.button`
+  cursor: pointer;
+  display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: center;
-  padding: 3% 5%;
+  padding: 3% 3%;
   border-bottom: 1px solid rgba(119, 121, 125, .4);
 `;
 
 export const TimeCont = styled.div`
   display: flex;
   align-items: center;
+  pointer-events: none;
 `;
 
 export const Time = styled.p`
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: ${({ color }) => color};
   background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 15px;
@@ -73,12 +89,30 @@ export const Time = styled.p`
 `;
 
 export const BusPosition = styled.div`
-  width: 11px;
-  height: 11px;
-  background-color: #5D4F6E;
-  border: 1px solid #8C71AD;
+  width: 12px;
+  height: 12px;
+  background-color: ${({ hasBus }) => hasBus ? '#05F2F2' : '#5D4F6E'};
+  border: 1px solid ${({ hasBus }) => hasBus ? '#05F2F2' : '#8C71AD'};
   border-radius: 50%;
   margin-left: 15px;
+  z-index: 99;
+`;
+
+export const BusLine = styled.div`
+  position: absolute;
+  width: 2px;
+  background-color: #5D4F6E;
+  height: ${({ height }) => height};
+  top: ${({ top }) => top};
+  right: calc(3% + 57px);
+`;
+
+export const BusPlateNum = styled.p`
+  color: #05F2F2;
+  font-size: 0.8rem;
+  width: 42px;
+  margin-left: 10px;
+  font-weight: 500;
 `;
 
 //文字
@@ -102,6 +136,7 @@ export const TextSmall = styled(Text)`
 export const TextMedium = styled(Text)`
   text-align: left;
   font-size: 1rem;
+  pointer-events: none;
 
   &::before {
     content: ' ${({ num }) => num}';

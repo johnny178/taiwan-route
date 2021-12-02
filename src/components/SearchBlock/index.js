@@ -15,10 +15,6 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
     mode !== Mode.FAVORITE ? setMode(Mode.FAVORITE) : setMode(Mode.SEARCH);
   };
 
-  const pressNearby = () => {
-    mode !== Mode.NEARBY ? setMode(Mode.NEARBY) : setMode(Mode.SEARCH);
-  };
-
   const pressMode = () => {
     setSearchValue(prevSeachValue => prevSeachValue.slice(0, -1));
     setMode(Mode.SEARCH);
@@ -38,7 +34,6 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
         <Position>{region}</Position>
         <Input
           placeholder={'要搭哪輛公車呢？'}
-          inputMode={'none'}
           value={searchValue}
           onChange={e => setSearchValue(e.target.value)}
         />
@@ -63,7 +58,6 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
         <ModeCont>
           <ModeBtn onClick={() => setIsFilterPressed(prevIsFilterPressed => !prevIsFilterPressed)}>縣市篩選</ModeBtn>
           <ModeBtn onClick={pressFavorite} isActive={mode === Mode.FAVORITE}>我的收藏</ModeBtn>
-          <ModeBtn onClick={pressNearby} isActive={mode === Mode.NEARBY}>附近站牌</ModeBtn>
         </ModeCont>
       </NumCont>
     </Wrapper >

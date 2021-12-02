@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
-import { getCityBusEstimatedTime, getCityBusRealTimeByFrequency, getCityBusRoutes, getCityBusShape, getCityBusStopOrder } from '../../api';
+import { getCityBusEstimatedTime, getCityBusRealTimeByFrequency, getCityBusRealTimeNearStop, getCityBusRoutes, getCityBusShape, getCityBusStopOrder } from '../../api';
 import StationList from '../StationList';
 import Loader from '../Loader';
 import { Container } from './styles';
@@ -13,13 +12,14 @@ const RouteDetailPage = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [refreshTime, setRefreshTime] = useState(10);
-  const [urlSearchParam, setUrlSeachParam] = useSearchParams();
+  const [urlSearchParam] = useSearchParams();
   const [busStopOrder, setBusStopOrder] = useState([]);
   const [departureDestination, setDepartureDestination] = useState([]);
   const [stopsData, setStopData] = useState([]);//組合過後的站牌資訊
   const [direction, setDirection] = useState(0);//0去程 1返程
   const [geometry, setGeometry] = useState([]);//公車路線線形
   const [busDynamicPostionData, setBusDynamicPostionData] = useState({});
+  const [map, setMap] = useState(null);
 
   const region = urlSearchParam.get('region');
   let routeName = decodeURI(location.pathname).slice(1, -1);
@@ -55,6 +55,23 @@ const RouteDetailPage = () => {
   }, [region, routeName]
   );
 
+  //取得公車所在站點位置
+  const getBusRealTimeNearStop = useCallback(async () => {
+    let searchParam = new URLSearchParams([['$format', 'JSON']]);
+
+    try {
+      let resp = await getCityBusRealTimeNearStop(region, routeName, searchParam);
+      resp = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
+      let goBus = resp.filter(item => !item.Direction);//去程
+      let backBus = resp.filter(item => item.Direction);//回程
+
+      return ([goBus, backBus]);
+    } catch (error) {
+      console.log('get bus real time by frequency error', error);
+    }
+  }, [region, routeName]
+  );
+
   //取得公車路線線形
   const getBusRouteShape = useCallback(async () => {
     let searchParam = new URLSearchParams([['$format', 'JSON']]);
@@ -68,6 +85,19 @@ const RouteDetailPage = () => {
       setGeometry(newGeoJson);
     } catch (error) {
       console.log('get bus routes shape error', error);
+    }
+  }, [region, routeName]
+  );
+
+  const getBusStopOrder = useCallback(async () => {
+    //取得路線站序資料
+    let searchParam = new URLSearchParams([['$format', 'JSON']]);
+    try {
+      let resp = await getCityBusStopOrder(region, routeName, searchParam);
+      let stops = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
+      setBusStopOrder(stops);
+    } catch (error) {
+      console.log('get bus stop order error', error);
     }
   }, [region, routeName]
   );
@@ -86,20 +116,11 @@ const RouteDetailPage = () => {
       await searchRoutes();
     }
 
-    //取得路線站序資料
-    try {
-      let resp = await getCityBusStopOrder(region, routeName, searchParam);
-      let stops = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
-      setBusStopOrder(stops);
-    } catch (error) {
-      console.log('get bus stop order error', error);
-    }
-
-    //取得公車路線線形
-    await getBusRouteShape();
-
     //取得公車動態位置
     await getBusRealTimeByFrequency();
+
+    //取得公車所在站點位置
+    let busCurrentStop = await getBusRealTimeNearStop();
 
     //取得預估到站資料
     try {
@@ -111,14 +132,13 @@ const RouteDetailPage = () => {
     } catch (error) {
       console.log('get bus estimated time error', error);
     }
+
     //組去程站牌資訊
     goBus.forEach(item => {
       goStopsData[item.StopID] = {
         StopStatus: item.StopStatus,
-        Estimate: item.Estimate,
         EstimateTime: item.EstimateTime,
         NextBusTime: item.NextBusTime,
-        PlateNumb: item.PlateNumb,
       };
     });
 
@@ -126,16 +146,24 @@ const RouteDetailPage = () => {
     backBus.forEach(item => {
       backStopsData[item.StopID] = {
         StopStatus: item.StopStatus,
-        Estimate: item.Estimate,
         EstimateTime: item.EstimateTime,
         NextBusTime: item.NextBusTime,
-        PlateNumb: item.PlateNumb,
       };
+    });
+
+    //設定去程公車站牌位置
+    busCurrentStop[0].forEach(item => {
+      goStopsData[item.StopID]['PlateNumb'] = item.PlateNumb;
+    });
+
+    //設定回程公車站牌位置
+    busCurrentStop[1].forEach(item => {
+      backStopsData[item.StopID]['PlateNumb'] = item.PlateNumb;
     });
 
     setStopData([goStopsData, backStopsData]);
     setIsLoading(false);
-  }, [getBusRealTimeByFrequency, getBusRouteShape, location.state, region, routeName, searchRoutes]
+  }, [getBusRealTimeByFrequency, getBusRealTimeNearStop, location.state, region, routeName, searchRoutes]
   );
 
   useEffect(() => {
@@ -143,13 +171,18 @@ const RouteDetailPage = () => {
   }, [refreshTime, getData]);
 
   useEffect(() => {
+    getBusStopOrder();
+
+    //取得公車路線線形
+    getBusRouteShape();
+
     const timer = setInterval(() => {
       setRefreshTime(prevRefreshTime => prevRefreshTime === 0 ? 10 : prevRefreshTime -= 1);
     }, 1000);
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [getBusRouteShape, getBusStopOrder]);
 
   if (isLoading) {
     return (<Loader />);
@@ -157,6 +190,13 @@ const RouteDetailPage = () => {
 
   return (
     <Container>
+      <Map
+        busStopOrder={busStopOrder}
+        geometry={geometry}
+        direction={direction}
+        busDynamicPostionData={busDynamicPostionData}
+        setMap={setMap}
+      />
       <StationList
         departureDestination={departureDestination}
         stopOrderData={busStopOrder}
@@ -164,12 +204,7 @@ const RouteDetailPage = () => {
         refreshTime={refreshTime}
         direction={direction}
         setDirection={setDirection}
-      />
-      <Map
-        busStopOrder={busStopOrder}
-        geometry={geometry}
-        direction={direction}
-        busDynamicPostionData={busDynamicPostionData}
+        map={map}
       />
     </Container>
   );

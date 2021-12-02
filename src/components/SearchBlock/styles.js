@@ -187,6 +187,7 @@ export const ModeCont = styled.div`
 
   @media (min-width: 996px) {
     flex-direction: column;
+    justify-content: flex-end;
     height: auto;
     margin-left: 21px;
     margin-top: 19px;

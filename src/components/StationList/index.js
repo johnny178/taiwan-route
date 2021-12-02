@@ -1,7 +1,25 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { Container, DirectionBtn, Header, StationCell, HeaderText, TextMedium, Time, TimeCont/*, BusPosition */ } from './styles';
+import * as Scroll from 'react-scroll';
+import { Container, DirectionBtn, Header, StationCell, HeaderText, TextMedium, Time, TimeCont, BusPosition, BusLine, BusPlateNum, StopListCont } from './styles';
 
-const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTime, direction, setDirection }) => {
+const busStateStyle = {
+  normal: ['#77797D', '#E3E3E3'],
+  close: ['#EF3232', '#FFD9D9'],
+  coming: ['#FFFFFF', '#EF3232']
+};
+
+const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTime, direction, setDirection, map }) => {
+
+  const getBusLineStyle = index => {
+    if (0 === index) {
+      return ({ top: '50%', height: '50%' });
+    }
+    if (stopOrderData[direction]?.Stops.length - 1 === index) {
+      return ({ top: '0px', height: '50%' });
+    }
+    return ({ top: '0', height: '100%' });
+  };
 
   const parseIsoDatetime = dtstr => {
     if (!dtstr) return;
@@ -10,22 +28,22 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
     return `${dt[3]}:${dt[4] < 10 ? '0' : ''}${dt[4]}`;
   };
 
+  const cellPressHandler = e => {
+    let position = e.target.value.split(',');
+    map.setView([position[0], position[1]], 17);
+  };
+
   const renderStopsList = () => {
     return (
       stopOrderData[direction]?.Stops.map((item, index) => {
         const {
           StopStatus,
           EstimateTime,
-          NextBusTime
+          NextBusTime,
+          PlateNumb
         } = stopsData[direction][item.StopID] ?? {};
         const estimateTime = EstimateTime !== undefined && (Math.floor(EstimateTime / 60) > 0 ? Math.floor(EstimateTime / 60) : '進站中');
         const nextBusTime = parseIsoDatetime(NextBusTime);
-
-        const busStateStyle = {
-          normal: ['#77797D', '#E3E3E3'],
-          close: ['#EF3232', '#FFD9D9'],
-          coming: ['#FFFFFF', '#EF3232']
-        };
 
         const getBusStateStyle = () => {
           if (estimateTime === '進站中')
@@ -58,7 +76,7 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
         };
 
         return (
-          <StationCell key={item.StopID}>
+          <StationCell key={item.StopUID} value={`${item.StopPosition.PositionLat},${item.StopPosition.PositionLon}`} onClick={cellPressHandler}>
             <TextMedium color={'#E3E3E3'} num={index + 1}>{item.StopName.Zh_tw}</TextMedium>
             <TimeCont>
               <Time
@@ -68,7 +86,9 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
               >
                 {timeText()}
               </Time>
-              {/* <BusPosition /> */}
+              <BusPosition hasBus={PlateNumb} />
+              <BusLine top={getBusLineStyle(index).top} height={getBusLineStyle(index).height} />
+              <BusPlateNum>{PlateNumb}</BusPlateNum>
             </TimeCont>
           </StationCell>
         );
@@ -83,7 +103,9 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
         <HeaderText color={'#E3E3E3'}>{`${refreshTime}秒後刷新`}</HeaderText>
         <DirectionBtn onClick={() => setDirection(1)} isActive={1 === direction}>{departureDestination[1]}</DirectionBtn>
       </Header>
-      {renderStopsList()}
+      <StopListCont>
+        {renderStopsList()}
+      </StopListCont>
     </Container>
   );
 };
