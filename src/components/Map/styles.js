@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
   flex: 2;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   border: 1px solid #707070;
   border-radius: 10px;
   padding: 2.5% 1%;
@@ -35,7 +34,7 @@ export const Item = styled.div`
   align-items: center;
 
   &:not(:last-child){
-    margin-right: 20px;
+    margin-right: 5%;
   }
 `;
 

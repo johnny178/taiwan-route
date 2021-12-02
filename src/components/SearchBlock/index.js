@@ -56,8 +56,8 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
           ))}
         </BtnGrid>
         <ModeCont>
-          <ModeBtn onClick={() => setIsFilterPressed(prevIsFilterPressed => !prevIsFilterPressed)}>縣市篩選</ModeBtn>
-          <ModeBtn onClick={pressFavorite} isActive={mode === Mode.FAVORITE}>我的收藏</ModeBtn>
+          <ModeBtn isFlex={true} onClick={() => setIsFilterPressed(prevIsFilterPressed => !prevIsFilterPressed)}>縣市篩選</ModeBtn>
+          <ModeBtn isFlex={true} onClick={pressFavorite} isActive={mode === Mode.FAVORITE}>我的收藏</ModeBtn>
         </ModeCont>
       </NumCont>
     </Wrapper >

@@ -96,6 +96,7 @@ export const Input = styled.input`
 `;
 
 export const ModeBtn = styled.button`
+  flex: ${({ isFlex }) => isFlex ? '1' : 'none'};
   aspect-ratio: 74 / 25;
   height: 100%;
   color: ${({ isActive }) => isActive ? '#E3E3E3' : '#403F3F'};;
@@ -103,6 +104,7 @@ export const ModeBtn = styled.button`
   border-radius: 8px;
   text-align: center;
   font-size: 1rem;
+  font-weight: 500;
   line-height: 25px;
   cursor: pointer;
 
@@ -111,6 +113,7 @@ export const ModeBtn = styled.button`
   }
 
   @media (min-width: 996px) {
+    font-size: 1.2rem;
     width: 157px;
     height: 49px;
     border-radius: 15px;
@@ -171,6 +174,7 @@ export const RouteBtn = styled.button`
   text-align: center;
   color: #E3E3E3;
   cursor: pointer;
+  font-weight: 700;
 
   @media (min-width: 996px) {
     border-radius: 15px;
@@ -179,7 +183,7 @@ export const RouteBtn = styled.button`
 
 export const ModeCont = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
   margin-top: 3vw;
   height: 7vw;

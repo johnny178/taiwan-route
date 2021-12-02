@@ -6,7 +6,7 @@ export const GlobalStyles = createGlobalStyle`
   }
   html, body {
     height: 100%;
-    font-family:  'Noto Sans TC','Roboto','Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Noto Sans TC','Roboto','Helvetica Neue', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
