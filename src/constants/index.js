@@ -1,7 +1,6 @@
 export const Mode = {
   SEARCH: 'search',
   FAVORITE: 'favarite',
-  NEARBY: 'nearby',
 };
 
 export const countryDic = {

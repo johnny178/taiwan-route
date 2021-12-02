@@ -41,7 +41,7 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap 
   const centerPosition = React.useMemo(() => {
     let centerLat = 0, centerLon = 0;
 
-    busStopOrder[direction].Stops.forEach(item => {
+    busStopOrder[direction]?.Stops.forEach(item => {
       centerLat += item.StopPosition.PositionLat;
       centerLon += item.StopPosition.PositionLon;
     });

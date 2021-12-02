@@ -49,6 +49,14 @@ export const StationCell = styled.button`
   align-items: center;
   padding: 3% 3%;
   border-bottom: 1px solid rgba(119, 121, 125, .4);
+  transition: all 0.2s ease-in-out;
+  
+  @media(hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: rgba(140, 113, 173, 0.22);
+      border-radius: 15px;
+    }
+  }
 `;
 
 export const TimeCont = styled.div`
@@ -63,9 +71,9 @@ export const Time = styled.p`
   background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 15px;
   letter-spacing: 0.32px;
-  padding: 3px 15px;
+  padding: 3px;
   white-space: nowrap;
-  width: 110px;
+  width: 80px;
   text-align: center;
   font-weight: 700;
 
@@ -100,6 +108,7 @@ export const BusPlateNum = styled.p`
   width: 42px;
   margin-left: 10px;
   font-weight: 500;
+  white-space: nowrap;
 `;
 
 //文字

@@ -34,6 +34,12 @@ export const SearchBar = styled.div`
   }
 `;
 
+export const PositionBtn = styled.button`
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+`;
+
 export const Icon = styled.img`
   height: 1rem;
   object-fit: contain;
@@ -107,9 +113,17 @@ export const ModeBtn = styled.button`
   font-weight: 500;
   line-height: 25px;
   cursor: pointer;
+  transition: all ease-in 0.2s;
 
   &:not(:last-child) {
     margin-right: 3vw;
+  }
+
+  @media(hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: ${({ isActive }) => isActive ? '#45B7D2' : '#403F3F'};
+      color: #E3E3E3;
+    }
   }
 
   @media (min-width: 996px) {
@@ -175,6 +189,12 @@ export const RouteBtn = styled.button`
   color: #E3E3E3;
   cursor: pointer;
   font-weight: 700;
+  transition: all ease-in 0.2s;
+
+  &:hover {
+    background-color: rgba(227, 227, 227, .31);
+    border: none;
+  }
 
   @media (min-width: 996px) {
     border-radius: 15px;

@@ -1,8 +1,8 @@
 import styled from 'styled-components/macro';
 
 export const Container = styled.div`
-  border: 12px solid #f3f3f3; /* Light grey */
-  border-top: 12px solid #B2E4FF; /* Blue */
+  border: 12px solid rgba(140, 113, 173, 0.22);
+  border-top: 12px solid rgba(140, 113, 173);
   border-radius: 50%;
   width: 80px;
   height: 80px;

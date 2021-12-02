@@ -99,7 +99,10 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
       <Header>
         <DirectionBtn onClick={() => setDirection(0)} isActive={0 === direction}>{departureDestination[0]}</DirectionBtn>
         <HeaderText color={'#E3E3E3'}>{`${refreshTime}秒後刷新`}</HeaderText>
-        <DirectionBtn onClick={() => setDirection(1)} isActive={1 === direction}>{departureDestination[1]}</DirectionBtn>
+        {
+          departureDestination[0] !== departureDestination[1] &&
+          <DirectionBtn onClick={() => setDirection(1)} isActive={1 === direction}>{departureDestination[1]}</DirectionBtn>
+        }
       </Header>
       {renderStopsList()}
     </Container>

@@ -30,4 +30,8 @@ export const Text = styled.p`
   color: #e3e3e3;
   font-size: 1rem;
   font-weight: 700;
+
+  @media (min-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;

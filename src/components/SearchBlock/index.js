@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BtnGrid, ModeCont, Icon, Input, ModeBtn, NumCont, Position, RouteBtn, RouteBtnCont, SearchBar, Wrapper } from './styles';
+import { BtnGrid, ModeCont, Icon, Input, ModeBtn, NumCont, Position, RouteBtn, RouteBtnCont, SearchBar, Wrapper, PositionBtn } from './styles';
 import LocalIconSmall from '../../images/locol icon.png';
 import LocalIconMedium from '../../images/locol icon@2x.png';
 import { Mode } from '../../constants';
@@ -30,8 +30,10 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
     <Wrapper>
       {isFilterPressed && <FilterModal region={region} setRegion={setRegion} setIsFilterPressed={setIsFilterPressed} />}
       <SearchBar>
-        <Icon src={LocalIconSmall} srcSet={`${LocalIconSmall} 1x, ${LocalIconMedium} 2x`} />
-        <Position>{region}</Position>
+        <PositionBtn onClick={() => setIsFilterPressed(prevIsFilterPressed => !prevIsFilterPressed)}>
+          <Icon src={LocalIconSmall} srcSet={`${LocalIconSmall} 1x, ${LocalIconMedium} 2x`} />
+          <Position>{region}</Position>
+        </PositionBtn>
         <Input
           placeholder={'要搭哪輛公車呢？'}
           value={searchValue}
