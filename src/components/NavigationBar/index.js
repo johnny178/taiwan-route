@@ -20,13 +20,8 @@ const NavigationBar = () => {
   let routeName = decodeURI(location.pathname).slice(1, -1);
 
   const searchRoutes = useCallback(async () => {
-    let urlSearchParam = new URLSearchParams([
-      ['$orderby', 'RouteName/Zh_tw'],
-      ['$format', 'JSON'],
-    ]);
-
     try {
-      let resp = await getCityBusRoutes(searchParam.get('region'), routeName, urlSearchParam);
+      let resp = await getCityBusRoutes(searchParam.get('region'), routeName);
       return resp.data[0];
     } catch (error) {
       console.log('get bus routes error', error);

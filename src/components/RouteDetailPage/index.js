@@ -26,10 +26,8 @@ const RouteDetailPage = () => {
 
   //取得路線資料
   const searchRoutes = useCallback(async () => {
-    let searchParam = new URLSearchParams([['$format', 'JSON']]);
-
     try {
-      let resp = await getCityBusRoutes(region, routeName, searchParam);
+      let resp = await getCityBusRoutes(region, routeName);
       let route = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
       const { DepartureStopNameZh, DestinationStopNameZh } = route[0];
       setDepartureDestination([DestinationStopNameZh, DepartureStopNameZh]);
@@ -41,10 +39,8 @@ const RouteDetailPage = () => {
 
   //取得公車動態位置
   const getBusRealTimeByFrequency = useCallback(async () => {
-    let searchParam = new URLSearchParams([['$format', 'JSON']]);
-
     try {
-      let resp = await getCityBusRealTimeByFrequency(region, routeName, searchParam);
+      let resp = await getCityBusRealTimeByFrequency(region, routeName);
       resp = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
       let goBus = resp.filter(item => !item.Direction);//去程
       let backBus = resp.filter(item => item.Direction);//回程
@@ -57,10 +53,8 @@ const RouteDetailPage = () => {
 
   //取得公車所在站點位置
   const getBusRealTimeNearStop = useCallback(async () => {
-    let searchParam = new URLSearchParams([['$format', 'JSON']]);
-
     try {
-      let resp = await getCityBusRealTimeNearStop(region, routeName, searchParam);
+      let resp = await getCityBusRealTimeNearStop(region, routeName);
       resp = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
       let goBus = resp.filter(item => !item.Direction);//去程
       let backBus = resp.filter(item => item.Direction);//回程
@@ -74,10 +68,8 @@ const RouteDetailPage = () => {
 
   //取得公車路線線形
   const getBusRouteShape = useCallback(async () => {
-    let searchParam = new URLSearchParams([['$format', 'JSON']]);
-
     try {
-      let resp = await getCityBusShape(region, routeName, searchParam);
+      let resp = await getCityBusShape(region, routeName);
       resp = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
       const wkt = new Wkt.Wkt();
       wkt.read(resp[0].Geometry);
@@ -91,9 +83,8 @@ const RouteDetailPage = () => {
 
   const getBusStopOrder = useCallback(async () => {
     //取得路線站序資料
-    let searchParam = new URLSearchParams([['$format', 'JSON']]);
     try {
-      let resp = await getCityBusStopOrder(region, routeName, searchParam);
+      let resp = await getCityBusStopOrder(region, routeName);
       let stops = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
       setBusStopOrder(stops);
     } catch (error) {
@@ -103,7 +94,6 @@ const RouteDetailPage = () => {
   );
 
   const getData = useCallback(async () => {
-    let searchParam = new URLSearchParams([['$format', 'JSON']]);
     let goBus = [];
     let backBus = [];
     let goStopsData = {};//組合過後的站牌資訊
@@ -124,7 +114,7 @@ const RouteDetailPage = () => {
 
     //取得預估到站資料
     try {
-      let resp = await getCityBusEstimatedTime(region, routeName, searchParam);
+      let resp = await getCityBusEstimatedTime(region, routeName);
       let bus = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
 
       goBus = bus.filter(item => !item.Direction);//去程

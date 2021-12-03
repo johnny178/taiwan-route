@@ -13,13 +13,8 @@ const SearchPage = () => {
   const [region, setRegion] = useState('臺北市');
 
   const searchRoutes = useCallback(async (searchValue) => {
-    let searchParam = new URLSearchParams([
-      ['$orderby', 'RouteName/Zh_tw'],
-      ['$format', 'JSON'],
-    ]);
-
     try {
-      let resp = await getCityBusRoutes(countryDic[region], searchValue, searchParam);
+      let resp = await getCityBusRoutes(countryDic[region], searchValue);
       setRouteData(resp.data);
     } catch (error) {
       console.log('get bus routes error', error);
@@ -36,6 +31,7 @@ const SearchPage = () => {
         setSearchValue('');
         break;
       default:
+        setSearchValue('');
         break;
     }
   }, [searchValue, mode, region, searchRoutes]);

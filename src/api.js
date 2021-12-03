@@ -1,6 +1,11 @@
 import axios from 'axios';
 import jsSHA from 'jssha';
 
+const searchParam = new URLSearchParams([
+  ['$orderby', 'RouteName/Zh_tw'],
+  ['$format', 'JSON'],
+]);
+
 const getAuthorizationHeader = () => {
   //  填入自己 ID、KEY 開始
   let AppID = '79b1459ffeca4aabadd35e191c8fed59';
@@ -52,22 +57,22 @@ const getRealTimeNearStop = axios.create({
 });
 
 //公車之路線資料
-export const getCityBusRoutes = (city, routeName, searchParam = '') => getBusRoutes.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
+export const getCityBusRoutes = (city, routeName) => getBusRoutes.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
 
 //公車之站牌資料
-export const getCityBusStops = (city, searchParam = '') => getBusStops.get(`/${city}?${searchParam}`, { headers: getAuthorizationHeader() });
+export const getCityBusStops = (city) => getBusStops.get(`/${city}?${searchParam}`, { headers: getAuthorizationHeader() });
 
 //公車之路線站序資料
-export const getCityBusStopOrder = (city, routeName, searchParam = '') => getBusStopOrder.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
+export const getCityBusStopOrder = (city, routeName) => getBusStopOrder.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
 
 //公車之預估到站資料
-export const getCityBusEstimatedTime = (city, routeName, searchParam = '') => getBusEstimatedTime.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
+export const getCityBusEstimatedTime = (city, routeName) => getBusEstimatedTime.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
 
 //公車之路線線形
-export const getCityBusShape = (city, routeName, searchParam = '') => getBusShape.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
+export const getCityBusShape = (city, routeName) => getBusShape.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
 
 //公車之動態定時資料
-export const getCityBusRealTimeByFrequency = (city, routeName, searchParam = '') => getRealTimeByFrequency.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
+export const getCityBusRealTimeByFrequency = (city, routeName) => getRealTimeByFrequency.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
 
 //公車之所在站點位置
-export const getCityBusRealTimeNearStop = (city, routeName, searchParam = '') => getRealTimeNearStop.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
+export const getCityBusRealTimeNearStop = (city, routeName) => getRealTimeNearStop.get(`/${city}/${routeName}?${searchParam}`, { headers: getAuthorizationHeader() });
