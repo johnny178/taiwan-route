@@ -7,6 +7,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
+    "dotenv-cli": "^4.1.1",
     "eslint-plugin-react-hooks": "^4.2.1-beta-0cc724c77-20211125",
     "jssha": "^3.2.0",
     "leaflet": "^1.7.1",

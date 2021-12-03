@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
 import jsSHA from 'jssha';
 
@@ -7,17 +8,13 @@ const searchParam = new URLSearchParams([
 ]);
 
 const getAuthorizationHeader = () => {
-  //  填入自己 ID、KEY 開始
-  let AppID = '79b1459ffeca4aabadd35e191c8fed59';
-  let AppKey = 'zvSZkHtUt4JieFWkdnOyW4iGtt4';
-  //  填入自己 ID、KEY 結束
   let GMTString = new Date().toGMTString();
   let ShaObj = new jsSHA('SHA-1', 'TEXT');
-  ShaObj.setHMACKey(AppKey, 'TEXT');
+  ShaObj.setHMACKey(process.env.REACT_APP_KEY, 'TEXT');
   ShaObj.update('x-date: ' + GMTString);
   let HMAC = ShaObj.getHMAC('B64');
   // eslint-disable-next-line no-useless-escape
-  let Authorization = 'hmac username=\"' + AppID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
+  let Authorization = 'hmac username=\"' + process.env.REACT_APP_ID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
   return { 'Authorization': Authorization, 'X-Date': GMTString };
 };
 
