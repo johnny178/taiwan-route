@@ -101,7 +101,7 @@ export const BackBtn = styled.button`
   font-size: 1rem;
   margin-top: 100px;
   cursor: pointer;
-  transition: all ease-in 0.2s;
+  transition: all ease-in-out 0.2s;
   
   @media(hover: hover) and (pointer: fine) {
     &:hover {

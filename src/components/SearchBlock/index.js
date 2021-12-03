@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { BtnGrid, ModeCont, Icon, Input, ModeBtn, NumCont, Position, RouteBtn, RouteBtnCont, SearchBar, Wrapper, PositionBtn } from './styles';
+import { BtnGrid, ModeCont, Icon, Input, ModeBtn, NumCont, Position, RouteBtn, RouteBtnCont, SearchBar, Wrapper, PositionBtn, ClearBtn, InputCont } from './styles';
 import LocalIconSmall from '../../images/locol icon.png';
 import LocalIconMedium from '../../images/locol icon@2x.png';
 import { Mode } from '../../constants';
 import FilterModal from '../FilterModal';
+
+import { ReactComponent as Close } from '../../images/svg/ico-shut-down.svg';
 
 const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRegion }) => {
   let route = ['紅', '橘', '黃', '綠', '藍', '棕', '幹線', '先導', '市民', '夜間', '貓空', '跳蛙', '內科', '南軟'];
@@ -34,11 +36,16 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
           <Icon src={LocalIconSmall} srcSet={`${LocalIconSmall} 1x, ${LocalIconMedium} 2x`} />
           <Position>{region}</Position>
         </PositionBtn>
-        <Input
-          placeholder={'要搭哪輛公車呢？'}
-          value={searchValue}
-          onChange={e => setSearchValue(e.target.value)}
-        />
+        <InputCont>
+          <Input
+            placeholder={'要搭哪輛公車呢？'}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+          />
+          <ClearBtn onClick={() => setSearchValue('')}>
+            <Close />
+          </ClearBtn>
+        </InputCont>
         <ModeBtn onClick={pressMode}>倒退</ModeBtn>
       </SearchBar>
       <BtnGrid>

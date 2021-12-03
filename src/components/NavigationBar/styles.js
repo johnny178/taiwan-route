@@ -11,7 +11,7 @@ export const Logo = styled(NavLink)``;
 
 export const Icon = styled.img`
   object-fit: cover;
-  width: 25vw;
+  width: 27vw;
   
   @media (min-width: 600px) {
     width: 100%;

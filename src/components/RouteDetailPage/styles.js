@@ -11,4 +11,3 @@ export const Container = styled.div`
     align-items: flex-start;
   }
 `;
-

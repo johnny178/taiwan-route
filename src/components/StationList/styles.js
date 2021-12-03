@@ -125,10 +125,6 @@ export const HeaderText = styled(Text)`
   font-weight: 500;
 `;
 
-export const TextSmall = styled(Text)`
-  font-size: 0.8rem;
-`;
-
 export const TextMedium = styled(Text)`
   text-align: left;
   font-size: 1rem;
@@ -139,9 +135,3 @@ export const TextMedium = styled(Text)`
     margin-right: 10px;
   }
 `;
-
-export const TextLarge = styled(Text)`
-  font-size: 1.2rem;
-`;
-
-

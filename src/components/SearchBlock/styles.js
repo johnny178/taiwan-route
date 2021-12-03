@@ -71,15 +71,29 @@ export const Position = styled.p`
   }
 `;
 
-export const Input = styled.input`
+export const InputCont = styled.div`
+  position: relative;
   flex: 1;
   min-width: 10%;
-  box-shadow: -1px 1px 3px #FFFFFF;
-  border: 1px solid #FFFFFF;
   margin-left: 4%;
   margin-right: 3%;
+  height: 100%;
+
+
+  @media (min-width: 996px) {
+    margin-left: 51px;
+    margin-right: 21px;
+    width: 244px;
+    flex: none;
+  }
+`;
+
+export const Input = styled.input`
+  box-shadow: -1px 1px 3px #FFFFFF;
+  border: 1px solid #FFFFFF;
   border-radius: 8px;
   height: 100%;
+  width: 100%;
   font-size: 0.8rem;
   text-indent: 5%;
 
@@ -93,12 +107,22 @@ export const Input = styled.input`
   
 
   @media (min-width: 996px) {
-    margin-left: 51px;
-    margin-right: 21px;
-    width: 244px;
-    flex: none;
     text-indent: 10px;
   }
+`;
+
+export const ClearBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: #77797D;
+  border-radius: 50%;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 10px;
+  padding: 3px;
+  cursor: pointer;
 `;
 
 export const ModeBtn = styled.button`
@@ -113,7 +137,7 @@ export const ModeBtn = styled.button`
   font-weight: 500;
   line-height: 25px;
   cursor: pointer;
-  transition: all ease-in 0.2s;
+  transition: all ease-in-out 0.2s;
 
   &:not(:last-child) {
     margin-right: 3vw;
@@ -189,11 +213,13 @@ export const RouteBtn = styled.button`
   color: #E3E3E3;
   cursor: pointer;
   font-weight: 700;
-  transition: all ease-in 0.2s;
+  transition: all ease-in-out 0.2s;
 
-  &:hover {
-    background-color: rgba(227, 227, 227, .31);
-    border: none;
+  @media(hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: rgba(227, 227, 227, .31);
+      border: none;
+    }
   }
 
   @media (min-width: 996px) {

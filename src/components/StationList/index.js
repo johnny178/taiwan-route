@@ -42,7 +42,6 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
         } = stopsData[direction][item.StopID] ?? {};
         const estimateTime = EstimateTime !== undefined && (Math.floor(EstimateTime / 60) > 0 ? Math.floor(EstimateTime / 60) : '進站中');
         const nextBusTime = parseIsoDatetime(NextBusTime);
-
         const getBusStateStyle = () => {
           if (estimateTime === '進站中')
             return busStateStyle.coming;
