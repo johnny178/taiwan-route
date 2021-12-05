@@ -45,8 +45,8 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap 
       centerLat += item.StopPosition.PositionLat;
       centerLon += item.StopPosition.PositionLon;
     });
-    centerLat /= busStopOrder[direction].Stops.length;
-    centerLon /= busStopOrder[direction].Stops.length;
+    centerLat /= busStopOrder[direction]?.Stops.length;
+    centerLon /= busStopOrder[direction]?.Stops.length;
     return ([centerLat, centerLon]);
   }, [busStopOrder, direction]);
 

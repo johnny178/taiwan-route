@@ -29,6 +29,10 @@ const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTi
   const cellPressHandler = e => {
     let position = e.target.value.split(',');
     map.setView([position[0], position[1]], 17);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const renderStopsList = () => {
