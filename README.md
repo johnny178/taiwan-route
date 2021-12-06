@@ -11,6 +11,7 @@
 - [React](https://reactjs.org/)
 - [Styled Components](https://styled-components.com/)
 - [React-Router](https://reactrouter.com/)
+- [Leaflet](https://leafletjs.com/)
 - And other useful plugins
 
 ## API resource
