@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AppWrapper from './components/AppWrapper';
 import RouteDetailPage from './components/RouteDetailPage';
-// import HomePage from './components/HomePage';
 import SearchPage from './components/SearchPage';
 
 function App() {
