@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MapContainer, Marker, Polyline, Popup, TileLayer, Tooltip } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { Image, Item, ItemCont, MapWrapper, Text, Wrapper } from './styles';
@@ -34,21 +34,24 @@ const pathColor = { color: '#5D4F6E' };
 const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap }) => {
   const [currentLocation, setCurrentLocation] = useState([]);
 
+  /**
+   * 取得公車路線中心點
+   */
+  let centerLat = 0, centerLon = 0;
+
+  busStopOrder[direction]?.Stops.forEach(item => {
+    centerLat += item.StopPosition.PositionLat;
+    centerLon += item.StopPosition.PositionLon;
+  });
+  centerLat /= busStopOrder[direction]?.Stops.length;
+  centerLon /= busStopOrder[direction]?.Stops.length;
+
+  const [mapPosition, setMapPosition] = useState([centerLat, centerLon]);
+
   useEffect(() => {
     getCurrentLocation();
-  }, []);
-
-  const centerPosition = React.useMemo(() => {
-    let centerLat = 0, centerLon = 0;
-
-    busStopOrder[direction]?.Stops.forEach(item => {
-      centerLat += item.StopPosition.PositionLat;
-      centerLon += item.StopPosition.PositionLon;
-    });
-    centerLat /= busStopOrder[direction]?.Stops.length;
-    centerLon /= busStopOrder[direction]?.Stops.length;
-    return ([centerLat, centerLon]);
-  }, [busStopOrder, direction]);
+    setMapPosition([centerLat, centerLon]);
+  }, [centerLat, centerLon]);
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(
@@ -61,7 +64,7 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap 
   const renderMap = () => {
     return (
       <MapWrapper>
-        <MapContainer center={[centerPosition[0], centerPosition[1]]} zoom={14} scrollWheelZoom={false} whenCreated={setMap}>
+        <MapContainer center={[mapPosition[0], mapPosition[1]]} zoom={14} scrollWheelZoom={false} whenCreated={setMap}>
           <Polyline pathOptions={pathColor} positions={geometry} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -69,7 +72,7 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap 
           />
           {
             //公車站牌位置
-            busStopOrder[direction].Stops.map((item, index) => (
+            busStopOrder[direction]?.Stops.map((item, index) => (
               <Marker key={item.StopUID} position={[item.StopPosition.PositionLat, item.StopPosition.PositionLon]} icon={station}>
                 <Tooltip offset={[0, 0]} direction="center" opacity={1} permanent>
                   {index + 1}

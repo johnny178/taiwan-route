@@ -157,14 +157,9 @@ const RouteDetailPage = () => {
   );
 
   useEffect(() => {
-    refreshTime === 10 && getData();
-  }, [refreshTime, getData]);
-
-  useEffect(() => {
     getBusStopOrder();
-
-    //取得公車路線線形
     getBusRouteShape();
+    getData();
 
     const timer = setInterval(() => {
       setRefreshTime(prevRefreshTime => prevRefreshTime === 0 ? 10 : prevRefreshTime -= 1);
@@ -172,7 +167,11 @@ const RouteDetailPage = () => {
     return () => {
       clearInterval(timer);
     };
-  }, [getBusRouteShape, getBusStopOrder]);
+  }, [getBusRouteShape, getBusStopOrder, getData]);
+
+  useEffect(() => {
+    refreshTime === 0 && getData();//倒數結束重新取需更新資料
+  }, [refreshTime, getData]);
 
   if (isLoading) {
     return (<Loader />);
