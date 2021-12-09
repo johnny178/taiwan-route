@@ -1,4 +1,4 @@
-# Taiwan Route - Taiwan Route Query Website
+# Taiwan Route - Taiwan Bus Query Website
 
 ![screenshot](https://github.com/johnny178/taiwan-route/blob/master/CoverImage.jpg)
 ## Features
