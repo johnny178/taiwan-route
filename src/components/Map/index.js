@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, Polyline, Popup, TileLayer, Tooltip } from 'react-leaflet';
-import { Icon, map } from 'leaflet';
+import { Icon } from 'leaflet';
 import { Image, Item, ItemCont, MapWrapper, Text, Wrapper } from './styles';
 import './map.css';
 import StationIcon from '../../images/站牌icon@2x.png';
@@ -31,7 +30,7 @@ const nowPlace = new Icon({
 
 const pathColor = { color: '#5D4F6E' };
 
-const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, map, setMap }) => {
+const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap }) => {
   const [currentLocation, setCurrentLocation] = useState([]);
 
   /**
