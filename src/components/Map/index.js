@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useState } from 'react';
 import { MapContainer, Marker, Polyline, Popup, TileLayer, Tooltip } from 'react-leaflet';
-import { Icon } from 'leaflet';
+import { Icon, map } from 'leaflet';
 import { Image, Item, ItemCont, MapWrapper, Text, Wrapper } from './styles';
 import './map.css';
 import StationIcon from '../../images/站牌icon@2x.png';
@@ -31,7 +31,7 @@ const nowPlace = new Icon({
 
 const pathColor = { color: '#5D4F6E' };
 
-const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap }) => {
+const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, map, setMap }) => {
   const [currentLocation, setCurrentLocation] = useState([]);
 
   /**
@@ -62,6 +62,8 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap 
   };
 
   const renderMap = () => {
+    if (!mapPosition[0]) return null;
+
     return (
       <MapWrapper>
         <MapContainer center={[mapPosition[0], mapPosition[1]]} zoom={14} scrollWheelZoom={false} whenCreated={setMap}>

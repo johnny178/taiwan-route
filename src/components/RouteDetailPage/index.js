@@ -184,6 +184,7 @@ const RouteDetailPage = () => {
         geometry={geometry}
         direction={direction}
         busDynamicPostionData={busDynamicPostionData}
+        map={map}
         setMap={setMap}
       />
       <StationList
