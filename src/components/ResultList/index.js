@@ -23,7 +23,7 @@ const ResultList = ({ routesData, mode }) => {
     let storedData = Object.assign({}, favoriteRoutesData);
 
     if (storedData[routeData.RouteUID]) {
-      //如果已儲存過，則移除
+      //如果已儲存過，則移除最愛路線
       delete storedData[routeData.RouteUID];
     } else {
       //新增最愛路線

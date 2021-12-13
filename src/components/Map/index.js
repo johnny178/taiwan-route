@@ -52,6 +52,9 @@ const Map = ({ direction, busStopOrder, geometry, busDynamicPostionData, setMap 
     setMapPosition([centerLat, centerLon]);
   }, [centerLat, centerLon]);
 
+  /**
+   * 取得當前位置
+   */
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {

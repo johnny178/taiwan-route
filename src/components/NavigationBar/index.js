@@ -14,11 +14,14 @@ import { getCityBusRoutes } from '../../api';
 const NavigationBar = () => {
   let storedData = localStorage['favoriteRoutes'] ? JSON.parse(localStorage['favoriteRoutes']) : {};
   const [searchParam, setSearchParam] = useSearchParams();
-  const location = useLocation();
   const [favoriteRoutesData, setFavoriteRoutesData] = useState(storedData);
-  const routerUID = searchParam.get('routeUID');
-  let routeName = decodeURI(location.pathname).slice(1, -1);
+  const routerUID = searchParam.get('routeUID');//路線UID
+  const location = useLocation();
+  let routeName = decodeURI(location.pathname).slice(1, -1);//路線名稱
 
+  /**
+   * 搜尋路線資料
+   */
   const searchRoutes = useCallback(async () => {
     try {
       let resp = await getCityBusRoutes(searchParam.get('region'), routeName);
@@ -32,7 +35,7 @@ const NavigationBar = () => {
   const pressLoveBtn = () => {
     let storedData = Object.assign({}, favoriteRoutesData);
     if (storedData[routerUID]) {
-      //如果已儲存過，則移除
+      //如果已儲存過，則移除最愛路線
       delete storedData[routerUID];
     } else {
       //新增最愛路線

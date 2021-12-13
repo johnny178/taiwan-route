@@ -8,7 +8,6 @@ const busStateStyle = {
 };
 
 const StationList = ({ departureDestination, stopOrderData, stopsData, refreshTime, direction, setDirection, map }) => {
-
   const getBusLineStyle = index => {
     if (0 === index) {
       return ({ top: '50%', height: '50%' });

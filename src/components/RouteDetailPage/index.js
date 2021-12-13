@@ -24,7 +24,9 @@ const RouteDetailPage = () => {
   const region = urlSearchParam.get('region');
   let routeName = decodeURI(location.pathname).slice(1, -1);
 
-  //取得路線資料
+  /**
+   * 取得路線資料
+   */
   const searchRoutes = useCallback(async () => {
     try {
       let resp = await getCityBusRoutes(region, routeName);
@@ -37,7 +39,9 @@ const RouteDetailPage = () => {
   }, [region, routeName]
   );
 
-  //取得公車動態位置
+  /**
+   * 取得公車動態位置
+   */
   const getBusRealTimeByFrequency = useCallback(async () => {
     try {
       let resp = await getCityBusRealTimeByFrequency(region, routeName);
@@ -51,7 +55,9 @@ const RouteDetailPage = () => {
   }, [region, routeName]
   );
 
-  //取得公車所在站點位置
+  /**
+   * 取得公車所在站點位置
+   */
   const getBusRealTimeNearStop = useCallback(async () => {
     try {
       let resp = await getCityBusRealTimeNearStop(region, routeName);
@@ -66,7 +72,9 @@ const RouteDetailPage = () => {
   }, [region, routeName]
   );
 
-  //取得公車路線線形
+  /**
+   * 取得公車路線線形
+   */
   const getBusRouteShape = useCallback(async () => {
     try {
       let resp = await getCityBusShape(region, routeName);
@@ -81,8 +89,10 @@ const RouteDetailPage = () => {
   }, [region, routeName]
   );
 
+  /**
+   * 取得路線站序資料
+   */
   const getBusStopOrder = useCallback(async () => {
-    //取得路線站序資料
     try {
       let resp = await getCityBusStopOrder(region, routeName);
       let stops = resp.data.filter(item => item.RouteName.Zh_tw === routeName);
@@ -93,7 +103,10 @@ const RouteDetailPage = () => {
   }, [region, routeName]
   );
 
-  const getData = useCallback(async () => {
+  /**
+   * 獲取及時更新資料
+   */
+  const getInstantData = useCallback(async () => {
     let goBus = [];
     let backBus = [];
     let goStopsData = {};//組合過後的站牌資訊
@@ -101,7 +114,7 @@ const RouteDetailPage = () => {
 
     if (location.state) {
       const { DepartureStopNameZh, DestinationStopNameZh } = location.state;
-      setDepartureDestination([DestinationStopNameZh, DepartureStopNameZh]);
+      setDepartureDestination([DestinationStopNameZh, DepartureStopNameZh]);//設定去返程站點資訊
     } else {
       await searchRoutes();
     }
@@ -159,7 +172,7 @@ const RouteDetailPage = () => {
   useEffect(() => {
     getBusStopOrder();
     getBusRouteShape();
-    getData();
+    getInstantData();
 
     const timer = setInterval(() => {
       setRefreshTime(prevRefreshTime => prevRefreshTime === 0 ? 10 : prevRefreshTime -= 1);
@@ -167,11 +180,11 @@ const RouteDetailPage = () => {
     return () => {
       clearInterval(timer);
     };
-  }, [getBusRouteShape, getBusStopOrder, getData]);
+  }, [getBusRouteShape, getBusStopOrder, getInstantData]);
 
   useEffect(() => {
-    refreshTime === 0 && getData();//倒數結束重新取需更新資料
-  }, [refreshTime, getData]);
+    refreshTime === 0 && getInstantData();//倒數結束重新取需更新資料
+  }, [refreshTime, getInstantData]);
 
   if (isLoading) {
     return (<Loader />);

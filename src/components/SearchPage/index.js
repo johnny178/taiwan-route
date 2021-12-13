@@ -12,6 +12,9 @@ const SearchPage = () => {
   const [searchValue, setSearchValue] = useState('');
   const [region, setRegion] = useState('臺北市');
 
+  /**
+   * 搜尋路線資料
+   */
   const searchRoutes = useCallback(async (searchValue) => {
     try {
       let resp = await getCityBusRoutes(countryDic[region], searchValue);

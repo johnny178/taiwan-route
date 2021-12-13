@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { BtnGrid, ModeCont, Icon, Input, ModeBtn, NumCont, Position, RouteBtn, RouteBtnCont, SearchBar, Wrapper, PositionBtn, ClearBtn, InputCont } from './styles';
-import LocalIconSmall from '../../images/locol icon.png';
-import LocalIconMedium from '../../images/locol icon@2x.png';
-import { Mode } from '../../constants';
 import FilterModal from '../FilterModal';
 
+import { Mode, searchBlockData } from '../../constants';
+import LocalIconSmall from '../../images/locol icon.png';
+import LocalIconMedium from '../../images/locol icon@2x.png';
 import { ReactComponent as Close } from '../../images/svg/ico-shut-down.svg';
 
 const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRegion }) => {
-  let route = ['紅', '橘', '黃', '綠', '藍', '棕', '幹線', '先導', '市民', '夜間', '貓空', '跳蛙', '內科', '南軟'];
-  let route2 = ['小', 'F', 'R', 'T', '其他', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-
   const [isFilterPressed, setIsFilterPressed] = useState(false);
 
   const pressFavorite = () => {
@@ -26,7 +23,6 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
     setSearchValue(prevSeachValue => prevSeachValue + e.target.innerText);
     setMode(Mode.SEARCH);
   };
-
 
   return (
     <Wrapper>
@@ -49,7 +45,7 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
         <ModeBtn onClick={pressMode}>倒退</ModeBtn>
       </SearchBar>
       <BtnGrid>
-        {route.map((item, index) => (
+        {searchBlockData[0].map((item, index) => (
           <RouteBtnCont key={index}>
             <RouteBtn onClick={e => pressRoute(e)}>{item}</RouteBtn>
           </RouteBtnCont>
@@ -58,7 +54,7 @@ const SearchBlock = ({ mode, setMode, searchValue, setSearchValue, region, setRe
 
       <NumCont>
         <BtnGrid hasNum={true}>
-          {route2.map((item, index) => (
+          {searchBlockData[1].map((item, index) => (
             <RouteBtnCont key={index}>
               <RouteBtn onClick={e => pressRoute(e)}>{item}</RouteBtn>
             </RouteBtnCont>
